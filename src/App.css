@@ -1,61 +1,140 @@
 /* General App Styles */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap'); /* Added Noto Sans as a fallback for Canva Sans */
+@import url(\'https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap\');
 
 .App {
   text-align: center;
-  /* Updated font stack, Noto Sans is a good open-source alternative to Canva Sans */
   font-family: "Canva Sans", "Noto Sans Variable", "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  color: #333; /* Default text color, will be overridden by more specific styles */
-  /* Updated background with the user-provided gradient */
+  color: #333;
   background: linear-gradient(to right, #9bf8f4, #6f7bf7);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: background 0.5s ease-in-out; /* Smooth transition for background */
+  transition: background 0.5s ease-in-out;
 }
 
 .App-header {
-  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent dark overlay for better text readability on gradient */
-  padding: 40px 20px; /* Increased padding for a more spacious feel */
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 30px 20px; /* Adjusted padding */
   color: white;
-  /* border-bottom: 5px solid #3498db; /* Removed potentially clunky border */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Softer shadow for depth */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: relative; /* For positioning nav buttons */
 }
 
 .App-header h1 {
-  margin: 0;
-  font-size: 2.8em; /* Slightly larger for impact */
-  font-weight: 700; /* Bolder */
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.2); /* Subtle text shadow for readability */
+  margin: 0 0 10px 0; /* Added bottom margin */
+  font-size: 2.6em; /* Adjusted size */
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
 
 .App-header p {
-  font-size: 1.2em; /* Slightly larger */
-  margin-top: 15px;
-  color: #f0f0f0; /* Lighter text for contrast */
-  max-width: 700px; /* Limit width for better readability */
+  font-size: 1.15em; /* Adjusted size */
+  margin-top: 0;
+  color: #f0f0f0;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 20px; /* Added bottom margin for spacing before buttons */
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.nav-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Info Sections (How to Use & FAQ) */
+.info-section {
+  background-color: rgba(255, 255, 255, 0.9);
+  margin: 20px auto;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 800px; /* Wider for content */
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.info-section h3 {
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #6f7bf7;
+  padding-bottom: 10px;
+}
+
+.info-section ul {
+  list-style-type: disc; /* Changed from none to disc for clarity */
+  padding-left: 20px; /* Indent list items */
+}
+
+.info-section li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.info-section strong {
+    color: #2c3e50;
 }
 
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 40px; /* Increased padding */
+  padding: 30px; /* Adjusted padding */
   flex-grow: 1;
-  gap: 40px; /* Increased gap */
+  gap: 30px; /* Adjusted gap */
 }
 
-.controls, .qr-preview {
-  background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white for a sleeker look */
-  padding: 30px; /* Increased padding */
-  border-radius: 16px; /* More rounded corners */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Softer, more diffused shadow */
+.controls {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   width: 100%;
-  max-width: 550px; /* Slightly wider */
+  max-width: 500px; /* Adjusted width */
   box-sizing: border-box;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.preview-area {
+    display: flex;
+    flex-direction: row; /* Changed to row for side ad */
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px; /* Gap between preview and side ad */
+    width: 100%;
+    max-width: 800px; /* Max width for the combined area */
+}
+
+.qr-preview {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  width: auto; /* Adjust width as needed, or let it be determined by content */
+  /* max-width: 500px; /* Removed max-width to allow flexibility with side ad */
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  flex-grow: 1; /* Allow preview to take available space */
 }
 
 .controls:hover, .qr-preview:hover {
@@ -64,24 +143,24 @@
 }
 
 .controls h2, .qr-preview h2 {
-  color: #2c3e50; /* Retained dark blue-grey for heading contrast */
+  color: #2c3e50;
   margin-top: 0;
   margin-bottom: 30px;
-  font-size: 2em; /* Slightly larger */
-  border-bottom: 2px solid #6f7bf7; /* Using one of the gradient colors for accent */
+  font-size: 2em;
+  border-bottom: 2px solid #6f7bf7;
   padding-bottom: 15px;
 }
 
 .control-group {
-  margin-bottom: 25px; /* Increased margin */
+  margin-bottom: 25px;
   text-align: left;
 }
 
 .control-group label {
   display: block;
-  margin-bottom: 10px; /* Increased margin */
-  font-weight: 600; /* Slightly bolder */
-  color: #444; /* Darker grey for labels */
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #444;
   font-size: 1.05em;
 }
 
@@ -91,9 +170,9 @@
 .control-group textarea,
 .control-group select {
   width: 100%;
-  padding: 15px; /* Increased padding */
-  border: 1px solid #ccc; /* Lighter border */
-  border-radius: 8px; /* More rounded */
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   box-sizing: border-box;
   font-size: 1em;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -105,14 +184,14 @@
 .control-group input[type="date"]:focus,
 .control-group textarea:focus,
 .control-group select:focus {
-  border-color: #6f7bf7; /* Using gradient accent color */
-  box-shadow: 0 0 0 3px rgba(111, 123, 247, 0.2); /* Subtle focus ring */
+  border-color: #6f7bf7;
+  box-shadow: 0 0 0 3px rgba(111, 123, 247, 0.2);
   outline: none;
 }
 
 .control-group input[type="color"] {
   width: 100%;
-  height: 45px; /* Increased height */
+  height: 45px;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 0;
@@ -126,9 +205,9 @@
 }
 
 .download-btn {
-  background-image: linear-gradient(to right, #6f7bf7 0%, #9bf8f4 100%); /* Gradient button */
+  background-image: linear-gradient(to right, #6f7bf7 0%, #9bf8f4 100%);
   color: white;
-  padding: 15px 30px; /* Increased padding */
+  padding: 15px 30px;
   border: none;
   border-radius: 8px;
   font-size: 1.15em;
@@ -151,23 +230,22 @@
 .qr-preview canvas {
   display: block;
   margin: 0 auto 25px auto;
-  border: none; /* Removed border for a cleaner look */
-  border-radius: 12px; /* More rounded */
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Subtle shadow for the QR code itself */
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .privacy-note {
   font-size: 0.95em;
-  color: #555; /* Darker for better readability on light background */
+  color: #555;
   margin-top: 25px;
 }
 
 .App-footer {
-  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent dark overlay */
+  background-color: rgba(0, 0, 0, 0.1);
   color: #f0f0f0;
   padding: 25px;
   font-size: 0.95em;
-  /* border-top: 5px solid #6f7bf7; /* Using gradient accent */
   box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
 }
 
@@ -176,20 +254,48 @@
 }
 
 .ad-placeholder {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: rgba(0, 0, 0, 0.05); /* Very subtle placeholder background */
+  margin-top: 15px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.05);
   border-radius: 8px;
-  border: 1px dashed #aaa; /* Lighter dashed border */
+  border: 1px dashed #aaa;
+  text-align: center; /* Center ad text */
 }
 
-.ad-placeholder p {
+.ad-placeholder-side {
+    background-color: rgba(255, 255, 255, 0.85); /* Slightly different background for distinction */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 300px; /* Example fixed width for a side banner */
+    min-height: 250px; /* Example min height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    flex-shrink: 0; /* Prevent shrinking if container is tight */
+}
+
+.ad-placeholder-side p, .ad-placeholder p {
     margin: 0;
     font-style: italic;
     color: #777;
 }
 
 /* Responsive adjustments */
+@media (max-width: 1200px) { /* Adjust breakpoint for side ad */
+    .preview-area {
+        flex-direction: column; /* Stack preview and side ad */
+        align-items: center; /* Center items when stacked */
+    }
+    .ad-placeholder-side {
+        width: 100%; /* Full width when stacked */
+        max-width: 500px; /* Match controls/preview width */
+        margin-top: 20px;
+    }
+}
+
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -197,8 +303,8 @@
     padding: 20px;
     gap: 20px;
   }
-  .controls, .qr-preview {
-    max-width: 100%; /* Full width on smaller screens */
+  .controls, .qr-preview, .preview-area /* Ensure preview-area also follows this */ {
+    max-width: 100%;
     padding: 20px;
   }
   .App-header h1 {
@@ -213,6 +319,17 @@
   .download-btn {
     padding: 12px 20px;
     font-size: 1.1em;
+  }
+  .info-section {
+    max-width: 95%;
+    padding: 20px;
+  }
+  .nav-buttons {
+    flex-direction: column; /* Stack nav buttons on small screens */
+    gap: 10px;
+  }
+  .nav-btn {
+    width: 100%;
   }
 }
 
