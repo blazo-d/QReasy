@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import './App.css';
 
@@ -150,7 +150,7 @@ function App() {
     html = html.replace(/### (.*)/g, '<h3>$1</h3>');
     html = html.replace(/<br \/>/g, '<br />');
 
-    const listItems = [];
+
     const lines = html.split('\n');
     let currentList = '';
 
