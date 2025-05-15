@@ -14,82 +14,81 @@
 
 .App-header {
   background-color: rgba(0, 0, 0, 0.1);
-  padding: 30px 20px; /* Adjusted padding */
+  padding: 30px 20px;
   color: white;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  position: relative; /* For positioning nav buttons */
 }
 
 .App-header h1 {
-  margin: 0 0 10px 0; /* Added bottom margin */
-  font-size: 2.6em; /* Adjusted size */
+  margin: 0 0 10px 0;
+  font-size: 2.6em;
   font-weight: 700;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
 
 .App-header p {
-  font-size: 1.15em; /* Adjusted size */
+  font-size: 1.15em;
   margin-top: 0;
   color: #f0f0f0;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 20px; /* Added bottom margin for spacing before buttons */
+  margin-bottom: 10px; /* Reduced margin as buttons are removed */
 }
 
-.nav-buttons {
+/* Main Content Layout */
+.main-content-wrapper {
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 10px;
+  flex-direction: row;
+  flex-grow: 1;
+  padding: 20px;
+  gap: 20px;
 }
 
-.nav-btn {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  padding: 10px 20px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 0.95em;
-  font-weight: 500;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.nav-btn:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-}
-
-/* Info Sections (How to Use & FAQ) */
-.info-section {
-  background-color: rgba(255, 255, 255, 0.9);
-  margin: 20px auto;
-  padding: 25px;
+.sidebar-content {
+  width: 300px; /* Fixed width for the sidebar */
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent */
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  height: fit-content; /* Adjust height to content */
+}
+
+.info-section {
+  background-color: transparent; /* Remove individual background as sidebar has one */
+  margin: 0 0 20px 0; /* Margin only at the bottom */
+  padding: 0; /* Remove padding as sidebar has it */
+  border-radius: 0;
+  box-shadow: none;
   width: 100%;
-  max-width: 800px; /* Wider for content */
+  max-width: none;
   box-sizing: border-box;
   text-align: left;
+}
+
+.info-section:last-child {
+  margin-bottom: 0;
 }
 
 .info-section h3 {
   color: #2c3e50;
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border-bottom: 1px solid #6f7bf7;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
+  font-size: 1.3em;
 }
 
-.info-section ul {
-  list-style-type: disc; /* Changed from none to disc for clarity */
-  padding-left: 20px; /* Indent list items */
+.info-section ul, .info-section ol {
+  list-style-position: inside; /* Ensure numbers/bullets are inside padding */
+  padding-left: 0; /* Remove default padding, handled by li margin if needed */
 }
 
 .info-section li {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   line-height: 1.6;
+  font-size: 0.95em;
 }
 
 .info-section strong {
@@ -98,43 +97,43 @@
 
 .container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 30px; /* Adjusted padding */
-  flex-grow: 1;
-  gap: 30px; /* Adjusted gap */
+  flex-wrap: wrap; /* Allow controls and preview to wrap if needed */
+  justify-content: flex-start; /* Align items to the start */
+  flex-grow: 1; /* Main container takes remaining space */
+  gap: 20px;
+  padding: 0; /* Remove padding as wrapper has it */
 }
 
 .controls {
   background-color: rgba(255, 255, 255, 0.95);
-  padding: 30px;
+  padding: 25px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   width: 100%;
-  max-width: 500px; /* Adjusted width */
+  max-width: 480px; /* Adjusted width */
   box-sizing: border-box;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  height: fit-content;
 }
 
 .preview-area {
     display: flex;
-    flex-direction: row; /* Changed to row for side ad */
-    align-items: flex-start; /* Align items to the top */
-    gap: 20px; /* Gap between preview and side ad */
+    flex-direction: column; /* Stack preview and side ad vertically */
+    align-items: center; /* Center items */
+    gap: 20px;
     width: 100%;
-    max-width: 800px; /* Max width for the combined area */
+    max-width: 320px; /* Max width for preview and its ad */
+    height: fit-content;
 }
 
 .qr-preview {
   background-color: rgba(255, 255, 255, 0.95);
-  padding: 30px;
+  padding: 25px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  width: auto; /* Adjust width as needed, or let it be determined by content */
-  /* max-width: 500px; /* Removed max-width to allow flexibility with side ad */
+  width: 100%; 
   box-sizing: border-box;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  flex-grow: 1; /* Allow preview to take available space */
 }
 
 .controls:hover, .qr-preview:hover {
@@ -145,23 +144,23 @@
 .controls h2, .qr-preview h2 {
   color: #2c3e50;
   margin-top: 0;
-  margin-bottom: 30px;
-  font-size: 2em;
+  margin-bottom: 25px;
+  font-size: 1.8em;
   border-bottom: 2px solid #6f7bf7;
-  padding-bottom: 15px;
+  padding-bottom: 12px;
 }
 
 .control-group {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   text-align: left;
 }
 
 .control-group label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-weight: 600;
   color: #444;
-  font-size: 1.05em;
+  font-size: 1em;
 }
 
 .control-group input[type="text"],
@@ -170,11 +169,11 @@
 .control-group textarea,
 .control-group select {
   width: 100%;
-  padding: 15px;
+  padding: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
-  font-size: 1em;
+  font-size: 0.95em;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   background-color: #fdfdfd;
 }
@@ -191,32 +190,74 @@
 
 .control-group input[type="color"] {
   width: 100%;
-  height: 45px;
+  height: 40px;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 0;
   cursor: pointer;
+  margin-bottom: 5px; /* Space before palette */
 }
 
 .control-group input[type="file"] {
-  padding: 12px 0;
-  font-size: 0.95em;
+  padding: 10px 0;
+  font-size: 0.9em;
   color: #555;
+}
+
+/* Color Palette Styles */
+.palette-chooser {
+  margin-top: 10px;
+}
+
+.palette-chooser label {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.palette-select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+}
+
+.color-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.color-swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; /* Circular swatches */
+  cursor: pointer;
+  border: 2px solid #fff; /* White border for definition */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
 }
 
 .download-btn {
   background-image: linear-gradient(to right, #6f7bf7 0%, #9bf8f4 100%);
   color: white;
-  padding: 15px 30px;
+  padding: 12px 25px;
   border: none;
   border-radius: 8px;
-  font-size: 1.15em;
+  font-size: 1.1em;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: block;
   width: 100%;
-  margin-top: 25px;
+  margin-top: 20px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -229,52 +270,51 @@
 
 .qr-preview canvas {
   display: block;
-  margin: 0 auto 25px auto;
+  margin: 0 auto 20px auto;
   border: none;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .privacy-note {
-  font-size: 0.95em;
+  font-size: 0.9em;
   color: #555;
-  margin-top: 25px;
+  margin-top: 20px;
 }
 
 .App-footer {
   background-color: rgba(0, 0, 0, 0.1);
   color: #f0f0f0;
-  padding: 25px;
-  font-size: 0.95em;
+  padding: 20px;
+  font-size: 0.9em;
   box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
 }
 
 .App-footer p {
-  margin: 8px 0;
+  margin: 5px 0;
 }
 
 .ad-placeholder {
-  margin-top: 15px;
-  padding: 15px;
+  margin-top: 10px;
+  padding: 10px;
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 8px;
   border: 1px dashed #aaa;
-  text-align: center; /* Center ad text */
+  text-align: center;
 }
 
 .ad-placeholder-side {
-    background-color: rgba(255, 255, 255, 0.85); /* Slightly different background for distinction */
-    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 15px;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    width: 300px; /* Example fixed width for a side banner */
-    min-height: 250px; /* Example min height */
+    width: 100%; /* Full width within its column */
+    min-height: 200px; 
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     box-sizing: border-box;
-    flex-shrink: 0; /* Prevent shrinking if container is tight */
 }
 
 .ad-placeholder-side p, .ad-placeholder p {
@@ -284,15 +324,18 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 1200px) { /* Adjust breakpoint for side ad */
-    .preview-area {
-        flex-direction: column; /* Stack preview and side ad */
+@media (max-width: 1024px) { /* Adjust breakpoint for sidebar layout */
+    .main-content-wrapper {
+        flex-direction: column; /* Stack sidebar and main content */
         align-items: center; /* Center items when stacked */
     }
-    .ad-placeholder-side {
-        width: 100%; /* Full width when stacked */
-        max-width: 500px; /* Match controls/preview width */
-        margin-top: 20px;
+    .sidebar-content {
+        width: 100%; 
+        max-width: 700px; /* Max width for sidebar when stacked */
+        margin-bottom: 20px;
+    }
+    .container {
+        justify-content: center; /* Center controls and preview area */
     }
 }
 
@@ -300,10 +343,8 @@
   .container {
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    gap: 20px;
   }
-  .controls, .qr-preview, .preview-area /* Ensure preview-area also follows this */ {
+  .controls, .preview-area {
     max-width: 100%;
     padding: 20px;
   }
@@ -320,16 +361,14 @@
     padding: 12px 20px;
     font-size: 1.1em;
   }
-  .info-section {
-    max-width: 95%;
-    padding: 20px;
+  .sidebar-content {
+    padding: 15px;
   }
-  .nav-buttons {
-    flex-direction: column; /* Stack nav buttons on small screens */
-    gap: 10px;
+  .info-section h3 {
+    font-size: 1.2em;
   }
-  .nav-btn {
-    width: 100%;
+  .info-section li {
+    font-size: 0.9em;
   }
 }
 
