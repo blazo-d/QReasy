@@ -1,71 +1,88 @@
 /* General App Styles */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap'); /* Added Noto Sans as a fallback for Canva Sans */
+
 .App {
   text-align: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  color: #333;
-  background-color: #f4f7f6;
+  /* Updated font stack, Noto Sans is a good open-source alternative to Canva Sans */
+  font-family: "Canva Sans", "Noto Sans Variable", "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: #333; /* Default text color, will be overridden by more specific styles */
+  /* Updated background with the user-provided gradient */
+  background: linear-gradient(to right, #9bf8f4, #6f7bf7);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: background 0.5s ease-in-out; /* Smooth transition for background */
 }
 
 .App-header {
-  background-color: #2c3e50; /* Dark blue-grey */
-  padding: 30px 20px;
+  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent dark overlay for better text readability on gradient */
+  padding: 40px 20px; /* Increased padding for a more spacious feel */
   color: white;
-  border-bottom: 5px solid #3498db; /* Bright blue accent */
+  /* border-bottom: 5px solid #3498db; /* Removed potentially clunky border */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Softer shadow for depth */
 }
 
 .App-header h1 {
   margin: 0;
-  font-size: 2.5em;
-  font-weight: bold;
+  font-size: 2.8em; /* Slightly larger for impact */
+  font-weight: 700; /* Bolder */
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2); /* Subtle text shadow for readability */
 }
 
 .App-header p {
-  font-size: 1.1em;
-  margin-top: 10px;
-  color: #ecf0f1; /* Light grey */
+  font-size: 1.2em; /* Slightly larger */
+  margin-top: 15px;
+  color: #f0f0f0; /* Lighter text for contrast */
+  max-width: 700px; /* Limit width for better readability */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 30px;
+  padding: 40px; /* Increased padding */
   flex-grow: 1;
-  gap: 30px;
+  gap: 40px; /* Increased gap */
 }
 
 .controls, .qr-preview {
-  background-color: #ffffff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white for a sleeker look */
+  padding: 30px; /* Increased padding */
+  border-radius: 16px; /* More rounded corners */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Softer, more diffused shadow */
   width: 100%;
-  max-width: 500px;
+  max-width: 550px; /* Slightly wider */
   box-sizing: border-box;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.controls:hover, .qr-preview:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
 .controls h2, .qr-preview h2 {
-  color: #2c3e50;
+  color: #2c3e50; /* Retained dark blue-grey for heading contrast */
   margin-top: 0;
-  margin-bottom: 25px;
-  font-size: 1.8em;
-  border-bottom: 2px solid #3498db;
-  padding-bottom: 10px;
+  margin-bottom: 30px;
+  font-size: 2em; /* Slightly larger */
+  border-bottom: 2px solid #6f7bf7; /* Using one of the gradient colors for accent */
+  padding-bottom: 15px;
 }
 
 .control-group {
-  margin-bottom: 20px;
+  margin-bottom: 25px; /* Increased margin */
   text-align: left;
 }
 
 .control-group label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #555;
+  margin-bottom: 10px; /* Increased margin */
+  font-weight: 600; /* Slightly bolder */
+  color: #444; /* Darker grey for labels */
+  font-size: 1.05em;
 }
 
 .control-group input[type="text"],
@@ -74,12 +91,13 @@
 .control-group textarea,
 .control-group select {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 15px; /* Increased padding */
+  border: 1px solid #ccc; /* Lighter border */
+  border-radius: 8px; /* More rounded */
   box-sizing: border-box;
   font-size: 1em;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fdfdfd;
 }
 
 .control-group input[type="text"]:focus,
@@ -87,77 +105,88 @@
 .control-group input[type="date"]:focus,
 .control-group textarea:focus,
 .control-group select:focus {
-  border-color: #3498db;
+  border-color: #6f7bf7; /* Using gradient accent color */
+  box-shadow: 0 0 0 3px rgba(111, 123, 247, 0.2); /* Subtle focus ring */
   outline: none;
 }
 
 .control-group input[type="color"] {
   width: 100%;
-  height: 40px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  height: 45px; /* Increased height */
+  border: 1px solid #ccc;
+  border-radius: 8px;
   padding: 0;
   cursor: pointer;
 }
 
 .control-group input[type="file"] {
-  padding: 10px 0;
+  padding: 12px 0;
+  font-size: 0.95em;
+  color: #555;
 }
 
 .download-btn {
-  background-color: #3498db; /* Bright blue */
+  background-image: linear-gradient(to right, #6f7bf7 0%, #9bf8f4 100%); /* Gradient button */
   color: white;
-  padding: 12px 25px;
+  padding: 15px 30px; /* Increased padding */
   border: none;
-  border-radius: 6px;
-  font-size: 1.1em;
+  border-radius: 8px;
+  font-size: 1.15em;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: block;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 25px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .download-btn:hover {
-  background-color: #2980b9; /* Darker blue */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
 .qr-preview canvas {
   display: block;
-  margin: 0 auto 20px auto;
-  border: 1px solid #eee;
-  border-radius: 8px;
+  margin: 0 auto 25px auto;
+  border: none; /* Removed border for a cleaner look */
+  border-radius: 12px; /* More rounded */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Subtle shadow for the QR code itself */
 }
 
 .privacy-note {
-  font-size: 0.9em;
-  color: #7f8c8d; /* Greyish blue */
-  margin-top: 20px;
+  font-size: 0.95em;
+  color: #555; /* Darker for better readability on light background */
+  margin-top: 25px;
 }
 
 .App-footer {
-  background-color: #2c3e50;
-  color: #ecf0f1;
-  padding: 20px;
-  font-size: 0.9em;
-  border-top: 5px solid #3498db;
+  background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent dark overlay */
+  color: #f0f0f0;
+  padding: 25px;
+  font-size: 0.95em;
+  /* border-top: 5px solid #6f7bf7; /* Using gradient accent */
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
 }
 
 .App-footer p {
-  margin: 5px 0;
+  margin: 8px 0;
 }
 
 .ad-placeholder {
-  margin-top: 15px;
-  padding: 15px;
-  background-color: #34495e; /* Slightly lighter dark blue-grey */
-  border-radius: 6px;
-  border: 1px dashed #7f8c8d;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.05); /* Very subtle placeholder background */
+  border-radius: 8px;
+  border: 1px dashed #aaa; /* Lighter dashed border */
 }
 
 .ad-placeholder p {
     margin: 0;
     font-style: italic;
+    color: #777;
 }
 
 /* Responsive adjustments */
@@ -165,15 +194,25 @@
   .container {
     flex-direction: column;
     align-items: center;
+    padding: 20px;
+    gap: 20px;
   }
   .controls, .qr-preview {
-    max-width: 90%;
+    max-width: 100%; /* Full width on smaller screens */
+    padding: 20px;
   }
   .App-header h1 {
-    font-size: 2em;
+    font-size: 2.2em;
   }
   .App-header p {
-    font-size: 1em;
+    font-size: 1.1em;
+  }
+  .controls h2, .qr-preview h2 {
+    font-size: 1.8em;
+  }
+  .download-btn {
+    padding: 12px 20px;
+    font-size: 1.1em;
   }
 }
 
