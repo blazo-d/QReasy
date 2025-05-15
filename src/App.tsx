@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react'; // Removed unused React import
 import { QRCodeCanvas } from 'qrcode.react';
 import './App.css';
 
@@ -6,7 +6,7 @@ function App() {
   const [qrValue, setQrValue] = useState('https://manus.ai');
   const [qrColor, setQrColor] = useState('#000000');
   const [qrBgColor, setQrBgColor] = useState('#FFFFFF');
-  const [qrLogo, setQrLogo] = useState('');
+  const [qrLogo, setQrLogo] = useState<string>(''); // Explicitly type qrLogo state
   const [logoSize, setLogoSize] = useState(0.1);
   const [qrType, setQrType] = useState('url'); // url, wifi, event, menu, text
 
@@ -24,14 +24,16 @@ function App() {
   const [menuUrl, setMenuUrl] = useState('');
   const [textValue, setTextValue] = useState('');
 
-  const qrRef = useRef(null);
+  const qrRef = useRef<HTMLDivElement>(null); // Specify the element type for the ref
 
-  const handleLogoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => { // Added type for 'e'
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
       const reader = new FileReader();
       reader.onloadend = () => {
-        setQrLogo(reader.result);
+        if (typeof reader.result === 'string') { // Ensure reader.result is a string
+          setQrLogo(reader.result);
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -42,7 +44,6 @@ function App() {
       case 'wifi':
         return `WIFI:S:${wifiSsid};T:${wifiEncryption};P:${wifiPassword};;`;
       case 'event':
-        // Basic event structure, can be expanded (e.g., iCalendar format)
         return `BEGIN:VEVENT\nSUMMARY:${eventName}\nDTSTART:${eventStartDate.replace(/-/g, '')}T000000\nDTEND:${eventEndDate.replace(/-/g, '')}T000000\nLOCATION:${eventLocation}\nDESCRIPTION:${eventDescription}\nEND:VEVENT`;
       case 'menu':
         return menuUrl;
@@ -55,6 +56,8 @@ function App() {
   };
 
   const downloadQRCode = () => {
+    // Access the canvas directly if QRCodeCanvas provides a ref, or use the qrRef if it's a wrapper
+    // For qrcode.react, the canvas is directly rendered. We need to ensure qrRef points to the div containing it.
     const canvas = qrRef.current?.querySelector('canvas');
     if (canvas) {
       const pngUrl = canvas
