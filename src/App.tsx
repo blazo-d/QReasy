@@ -249,6 +249,14 @@ function App() {
       <div className="main-content-wrapper">
         <aside className="sidebar-content">
           <section className="info-section guide-section" dangerouslySetInnerHTML={renderMarkdown(howToUseContent, true)} />
+          {/* Example Images Section */}
+          <section className="example-images-section">
+            <h4>QR Codes in Action</h4>
+            <div className="example-image-container">
+              <img src="/images/qr_brochure_example.jpeg" alt="QR code on a brochure example" />
+              {/* Add more images here if needed */}
+            </div>
+          </section>
         </aside>
 
         <main className="container">
