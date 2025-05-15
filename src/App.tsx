@@ -145,47 +145,54 @@ function App() {
   const currentQrValue = generateQrValue();
 
   const renderMarkdown = (markdown: string, isNumberedList = false) => {
-    let html = markdown;
-    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    html = html.replace(/### (.*)/g, '<h3>$1</h3>');
-    html = html.replace(/<br \/>/g, '<br />');
+  let html = '';
+  const lines = markdown.split('\n');
 
+  let inOl = false;
+  let inNestedOl = false;
 
-    const lines = html.split('\n');
-    let currentList = '';
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i];
 
-    for (const line of lines) {
-        if (line.match(/^\d+\.\s+.*/)) { // Main numbered list item e.g. 1. Text
-            if (currentList !== 'ol') {
-                if (currentList) currentList += isNumberedList ? '</ol>' : '</ul>';
-                currentList = (isNumberedList ? '<ol>' : '<ul>') + `<li>${line.replace(/^\d+\.\s+/, '')}</li>`;
-            } else {
-                currentList += `<li>${line.replace(/^\d+\.\s+/, '')}</li>`;
-            }
-        } else if (line.match(/^\s{4}\d+\.\s+.*/)) { // Nested numbered list item e.g.    1. Text
-             if (currentList.endsWith('</li>')) { // Append to previous li if possible
-                currentList = currentList.slice(0, -5) + `<ol style="margin-left: 20px; margin-top: 5px;"><li>${line.replace(/^\s{4}\d+\.\s+/, '')}</li></ol></li>`;
-            } else {
-                 currentList += `<ol style="margin-left: 20px; margin-top: 5px;"><li>${line.replace(/^\s{4}\d+\.\s+/, '')}</li></ol>`;
-            }
-        } else if (line.trim() !== '') {
-            if (currentList) {
-                currentList += isNumberedList ? '</ol>' : '</ul>';
-                html = html.replace(lines.slice(lines.indexOf(currentList.split('\n')[0]), lines.indexOf(line)).join('\n'), currentList);
-                currentList = '';
-            }
-        }
+    // Pre-process for bold and br tags universally
+    line = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    line = line.replace(/<br \/>/g, '<br />');
+
+    if (line.match(/^### (.*)/)) {
+      if (inNestedOl) { html += '</ol></li>'; inNestedOl = false; }
+      if (inOl) { html += '</li></ol>'; inOl = false; }
+      html += line.replace(/^### (.*)/, '<h3>$1</h3>');
+    } else if (isNumberedList && line.match(/^\d+\.\s+.*/)) { // Main list item
+      if (inNestedOl) { html += '</ol></li>'; inNestedOl = false; } // Close nested list if open
+      if (!inOl) { html += '<ol>'; inOl = true; }
+      else { html += '</li>'; } // Close previous main li
+      html += `<li>${line.replace(/^\d+\.\s+/, '')}`;
+    } else if (isNumberedList && line.match(/^\s{4}\d+\.\s+.*/)) { // Nested list item
+      if (!inNestedOl) {
+        html += '<ol style="margin-left: 20px; margin-top: 5px;">';
+        inNestedOl = true;
+      } else {
+        html += '</li>'; // Close previous nested li
+      }
+      html += `<li>${line.replace(/^\s{4}\d+\.\s+/, '')}`;
+    } else { // Plain text or non-list items
+      if (line.trim() !== '') { // Only close lists if the line has content and is not part of list continuation
+        if (inNestedOl) { html += '</ol></li>'; inNestedOl = false; }
+        if (inOl) { html += '</li></ol>'; inOl = false; }
+      }
+      html += line;
     }
-    if (currentList) {
-        currentList += isNumberedList ? '</ol>' : '</ul>';
-        html = html.replace(lines.slice(lines.indexOf(currentList.split('\n')[0])).join('\n'), currentList);
+    if (i < lines.length - 1 || (i === lines.length -1 && line.trim() !== '')) { // Add newline if not the truly last empty line
+        html += '\n';
     }
-    
-    // Fallback for simple non-list content within the same markdown string
-    html = html.split('\n').filter(line => !line.match(/^(\d+\.|\s{4}\d+\.)\s+.*/)).join('\n');
+  }
 
-    return { __html: html };
-  };
+  // Close any open lists at the end
+  if (inNestedOl) { html += '</ol></li>'; }
+  if (inOl) { html += '</li></ol>'; }
+
+  return { __html: html.trim() }; // Trim to remove any leading/trailing whitespace including newlines from the final HTML string
+};
   
   const getLogoDimensions = () => {
     if (!qrLogo || !logoNaturalWidth || !logoNaturalHeight) {
