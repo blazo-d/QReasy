@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import './App.css';
 
@@ -44,7 +44,7 @@ const faqContent = `
 <br />A7: No, the static QR codes you create with QReasy do not expire. As long as the data encoded (like a website URL) remains valid, your QR code will continue to work indefinitely.
 
 **Q8: What is the optimal size for a logo in the QR code?**
-<br />A8: While you can adjust the logo size, it's best to keep it relatively small (the tool allows up to 30% of the QR code area) to ensure the QR code remains easily scannable. A clear, simple logo works best.
+<br />A8: While you can adjust the logo size, it's best to keep it relatively small (the tool allows up to 30% of the QR code area) to ensure the QR code remains easily scannable. A clear, simple logo works best. Non-square logos will maintain their original aspect ratio.
 
 **Q9: My QR code isn't scanning. What could be wrong?**
 <br />A9: 
@@ -70,7 +70,9 @@ function App() {
   const [qrColor, setQrColor] = useState('#000000');
   const [qrBgColor, setQrBgColor] = useState('#FFFFFF');
   const [qrLogo, setQrLogo] = useState<string>('');
-  const [logoSize, setLogoSize] = useState(0.1);
+  const [logoSize, setLogoSize] = useState(0.15); // Default logo size
+  const [logoNaturalWidth, setLogoNaturalWidth] = useState<number | null>(null);
+  const [logoNaturalHeight, setLogoNaturalHeight] = useState<number | null>(null);
   const [qrType, setQrType] = useState('url');
 
   const [wifiSsid, setWifiSsid] = useState('');
@@ -87,7 +89,7 @@ function App() {
   const [textValue, setTextValue] = useState('');
 
   const qrRef = useRef<HTMLDivElement>(null);
-
+  const [showFaq, setShowFaq] = useState(false);
   const [selectedPalette, setSelectedPalette] = useState<keyof typeof colorPalettes>('default');
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,6 +99,12 @@ function App() {
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
           setQrLogo(reader.result);
+          const img = new Image();
+          img.onload = () => {
+            setLogoNaturalWidth(img.naturalWidth);
+            setLogoNaturalHeight(img.naturalHeight);
+          };
+          img.src = reader.result;
         }
       };
       reader.readAsDataURL(file);
@@ -136,26 +144,68 @@ function App() {
 
   const currentQrValue = generateQrValue();
 
-  const renderMarkdown = (markdown: string) => {
+  const renderMarkdown = (markdown: string, isNumberedList = false) => {
     let html = markdown;
     html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/### (.*)/g, '<h3>$1</h3>');
     html = html.replace(/<br \/>/g, '<br />');
-    // Numbered lists (updated for 1. and 1. 1. format)
-    html = html.replace(/^(\d+\.)\s+(.*)/gm, '<li>$2</li>'); // Main numbered list item
-    html = html.replace(/^\s{4}(\d+\.)\s+(.*)/gm, '<li style="margin-left: 20px;">$2</li>'); // Nested numbered list item
-    
-    // Wrap list items in ol - this is a simplification and might need adjustment for nested lists
-    if (html.includes('<li>')) {
-      // This simple regex won't handle nested lists correctly for ol/ul structure.
-      // For proper nested lists, a more robust parser or component structure would be needed.
-      // For now, it wraps all found <li> in a single <ol>.
-      const listItems = html.match(/<li>.*?<\/li>/g)?.join('') || '';
-      html = html.replace(/<li>.*?<\/li>/g, ''); // Remove individual li for now
-      html = html + `<ol>${listItems}</ol>`; // Append the list
+
+    const listItems = [];
+    const lines = html.split('\n');
+    let currentList = '';
+
+    for (const line of lines) {
+        if (line.match(/^\d+\.\s+.*/)) { // Main numbered list item e.g. 1. Text
+            if (currentList !== 'ol') {
+                if (currentList) currentList += isNumberedList ? '</ol>' : '</ul>';
+                currentList = (isNumberedList ? '<ol>' : '<ul>') + `<li>${line.replace(/^\d+\.\s+/, '')}</li>`;
+            } else {
+                currentList += `<li>${line.replace(/^\d+\.\s+/, '')}</li>`;
+            }
+        } else if (line.match(/^\s{4}\d+\.\s+.*/)) { // Nested numbered list item e.g.    1. Text
+             if (currentList.endsWith('</li>')) { // Append to previous li if possible
+                currentList = currentList.slice(0, -5) + `<ol style="margin-left: 20px; margin-top: 5px;"><li>${line.replace(/^\s{4}\d+\.\s+/, '')}</li></ol></li>`;
+            } else {
+                 currentList += `<ol style="margin-left: 20px; margin-top: 5px;"><li>${line.replace(/^\s{4}\d+\.\s+/, '')}</li></ol>`;
+            }
+        } else if (line.trim() !== '') {
+            if (currentList) {
+                currentList += isNumberedList ? '</ol>' : '</ul>';
+                html = html.replace(lines.slice(lines.indexOf(currentList.split('\n')[0]), lines.indexOf(line)).join('\n'), currentList);
+                currentList = '';
+            }
+        }
     }
+    if (currentList) {
+        currentList += isNumberedList ? '</ol>' : '</ul>';
+        html = html.replace(lines.slice(lines.indexOf(currentList.split('\n')[0])).join('\n'), currentList);
+    }
+    
+    // Fallback for simple non-list content within the same markdown string
+    html = html.split('\n').filter(line => !line.match(/^(\d+\.|\s{4}\d+\.)\s+.*/)).join('\n');
+
     return { __html: html };
   };
+  
+  const getLogoDimensions = () => {
+    if (!qrLogo || !logoNaturalWidth || !logoNaturalHeight) {
+      return { width: 0, height: 0 };
+    }
+    const qrCanvasSize = 256;
+    const maxLogoDimension = qrCanvasSize * logoSize;
+    let width, height;
+
+    if (logoNaturalWidth > logoNaturalHeight) {
+      width = maxLogoDimension;
+      height = (logoNaturalHeight / logoNaturalWidth) * maxLogoDimension;
+    } else {
+      height = maxLogoDimension;
+      width = (logoNaturalWidth / logoNaturalHeight) * maxLogoDimension;
+    }
+    return { width, height };
+  };
+
+  const logoDimensions = getLogoDimensions();
 
   const ColorPaletteChooser = ({ setColor }: { setColor: (color: string) => void }) => (
     <div className="palette-chooser">
@@ -184,12 +234,14 @@ function App() {
       <header className="App-header">
         <h1>QReasy: Free QR Code Generator</h1>
         <p>Create custom QR codes for free. User-friendly and privacy-focused.</p>
+        <div className="nav-buttons-header">
+            <button onClick={() => setShowFaq(!showFaq)} className="nav-btn-header">{showFaq ? 'Hide FAQ' : 'Show FAQ'}</button>
+        </div>
       </header>
 
       <div className="main-content-wrapper">
         <aside className="sidebar-content">
-          <section className="info-section guide-section" dangerouslySetInnerHTML={renderMarkdown(howToUseContent)} />
-          <section className="info-section faq-section" dangerouslySetInnerHTML={renderMarkdown(faqContent)} />
+          <section className="info-section guide-section" dangerouslySetInnerHTML={renderMarkdown(howToUseContent, true)} />
         </aside>
 
         <main className="container">
@@ -301,7 +353,7 @@ function App() {
             </div>
             {qrLogo && (
                <div className="control-group">
-                  <label htmlFor="logoSize">Logo Size (10% to 30%):</label>
+                  <label htmlFor="logoSize">Logo Size (Max 10% to 30% of QR Area):</label>
                   <input 
                       type="range" 
                       id="logoSize" 
@@ -326,11 +378,13 @@ function App() {
                   fgColor={qrColor}
                   bgColor={qrBgColor}
                   level={"H"} 
-                  imageSettings={qrLogo ? {
+                  imageSettings={qrLogo && logoDimensions.width > 0 ? {
                       src: qrLogo,
-                      height: 256 * logoSize,
-                      width: 256 * logoSize,
+                      height: logoDimensions.height,
+                      width: logoDimensions.width,
                       excavate: true,
+                      x: undefined, // Let library center it
+                      y: undefined,
                   } : undefined}
                   />
               ) : <p>Please enter data to generate QR code.</p>}
@@ -344,6 +398,9 @@ function App() {
 
         </main>
       </div>
+      {showFaq && (
+        <section className="info-section faq-section-floating" dangerouslySetInnerHTML={renderMarkdown(faqContent, false)} />
+      )}
       <footer className="App-footer">
         <p>&copy; {new Date().getFullYear()} QReasy. All rights reserved.</p>
         <div className="ad-placeholder ad-placeholder-footer">

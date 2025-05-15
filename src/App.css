@@ -14,26 +14,51 @@
 
 .App-header {
   background-color: rgba(0, 0, 0, 0.1);
-  padding: 30px 20px;
+  padding: 25px 20px; /* Adjusted padding */
   color: white;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: relative; /* For positioning nav buttons */
 }
 
 .App-header h1 {
-  margin: 0 0 10px 0;
-  font-size: 2.6em;
+  margin: 0 0 8px 0; /* Adjusted bottom margin */
+  font-size: 2.4em; /* Adjusted size */
   font-weight: 700;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
 
 .App-header p {
-  font-size: 1.15em;
+  font-size: 1.1em; /* Adjusted size */
   margin-top: 0;
   color: #f0f0f0;
-  max-width: 700px;
+  max-width: 650px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 10px; /* Reduced margin as buttons are removed */
+  margin-bottom: 15px; /* Space before FAQ button */
+}
+
+.nav-buttons-header {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.nav-btn-header {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-btn-header:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 
 /* Main Content Layout */
@@ -46,19 +71,19 @@
 }
 
 .sidebar-content {
-  width: 300px; /* Fixed width for the sidebar */
-  flex-shrink: 0; /* Prevent sidebar from shrinking */
-  background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent */
+  width: 320px; /* Slightly wider sidebar */
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 0.88); /* Slightly more opaque */
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  height: fit-content; /* Adjust height to content */
+  height: fit-content;
 }
 
 .info-section {
-  background-color: transparent; /* Remove individual background as sidebar has one */
-  margin: 0 0 20px 0; /* Margin only at the bottom */
-  padding: 0; /* Remove padding as sidebar has it */
+  background-color: transparent;
+  margin: 0 0 20px 0;
+  padding: 0;
   border-radius: 0;
   box-shadow: none;
   width: 100%;
@@ -74,43 +99,80 @@
 .info-section h3 {
   color: #2c3e50;
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 12px; /* Increased margin */
   border-bottom: 1px solid #6f7bf7;
-  padding-bottom: 8px;
-  font-size: 1.3em;
+  padding-bottom: 10px;
+  font-size: 1.25em; /* Slightly larger */
 }
 
-.info-section ul, .info-section ol {
-  list-style-position: inside; /* Ensure numbers/bullets are inside padding */
-  padding-left: 0; /* Remove default padding, handled by li margin if needed */
+.info-section ol {
+  list-style-type: decimal; /* Ensure numbered list */
+  list-style-position: outside; /* Numbers outside the text block */
+  padding-left: 20px; /* Indent for numbers */
+  margin: 0;
+}
+
+.info-section ol ol { /* Nested lists */
+    list-style-type: lower-alpha;
+    padding-left: 25px; /* Further indent nested lists */
+    margin-top: 5px;
 }
 
 .info-section li {
-  margin-bottom: 8px;
-  line-height: 1.6;
-  font-size: 0.95em;
+  margin-bottom: 10px; /* Increased spacing */
+  line-height: 1.65; /* Improved readability */
+  font-size: 0.92em; /* Adjusted size */
 }
 
 .info-section strong {
     color: #2c3e50;
 }
 
+/* FAQ Section - Floating/Toggleable */
+.faq-section-floating {
+  background-color: rgba(255, 255, 255, 0.95);
+  margin: 20px auto;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  width: 90%;
+  max-width: 750px;
+  box-sizing: border-box;
+  text-align: left;
+  /* Could add transition for appearing/disappearing if desired */
+}
+.faq-section-floating h3 {
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #6f7bf7;
+  padding-bottom: 10px;
+}
+.faq-section-floating ul {
+  list-style-type: none; /* No bullets for Q&A */
+  padding-left: 0;
+}
+.faq-section-floating li {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
 .container {
   display: flex;
-  flex-wrap: wrap; /* Allow controls and preview to wrap if needed */
-  justify-content: flex-start; /* Align items to the start */
-  flex-grow: 1; /* Main container takes remaining space */
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  flex-grow: 1;
   gap: 20px;
-  padding: 0; /* Remove padding as wrapper has it */
+  padding: 0;
 }
 
 .controls {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.97); /* Slightly more opaque */
   padding: 25px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   width: 100%;
-  max-width: 480px; /* Adjusted width */
+  max-width: 460px; /* Adjusted width */
   box-sizing: border-box;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   height: fit-content;
@@ -118,16 +180,16 @@
 
 .preview-area {
     display: flex;
-    flex-direction: column; /* Stack preview and side ad vertically */
-    align-items: center; /* Center items */
+    flex-direction: column;
+    align-items: center;
     gap: 20px;
     width: 100%;
-    max-width: 320px; /* Max width for preview and its ad */
+    max-width: 300px; /* Adjusted for tighter layout */
     height: fit-content;
 }
 
 .qr-preview {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.97);
   padding: 25px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -145,22 +207,22 @@
   color: #2c3e50;
   margin-top: 0;
   margin-bottom: 25px;
-  font-size: 1.8em;
+  font-size: 1.7em; /* Adjusted size */
   border-bottom: 2px solid #6f7bf7;
   padding-bottom: 12px;
 }
 
 .control-group {
-  margin-bottom: 20px;
+  margin-bottom: 18px; /* Slightly reduced margin */
   text-align: left;
 }
 
 .control-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 7px; /* Slightly reduced margin */
   font-weight: 600;
   color: #444;
-  font-size: 1em;
+  font-size: 0.95em; /* Adjusted size */
 }
 
 .control-group input[type="text"],
@@ -169,11 +231,11 @@
 .control-group textarea,
 .control-group select {
   width: 100%;
-  padding: 12px;
+  padding: 11px; /* Adjusted padding */
   border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
-  font-size: 0.95em;
+  font-size: 0.9em; /* Adjusted size */
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   background-color: #fdfdfd;
 }
@@ -190,12 +252,12 @@
 
 .control-group input[type="color"] {
   width: 100%;
-  height: 40px;
+  height: 38px; /* Adjusted height */
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 0;
   cursor: pointer;
-  margin-bottom: 5px; /* Space before palette */
+  margin-bottom: 5px;
 }
 
 .control-group input[type="file"] {
@@ -206,37 +268,37 @@
 
 /* Color Palette Styles */
 .palette-chooser {
-  margin-top: 10px;
+  margin-top: 8px; /* Adjusted margin */
 }
 
 .palette-chooser label {
-  font-size: 0.9em;
+  font-size: 0.85em; /* Adjusted size */
   color: #555;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   display: block;
 }
 
 .palette-select {
   width: 100%;
-  padding: 8px;
+  padding: 7px; /* Adjusted padding */
   border-radius: 6px;
   border: 1px solid #ddd;
-  margin-bottom: 10px;
-  font-size: 0.9em;
+  margin-bottom: 8px;
+  font-size: 0.85em;
 }
 
 .color-swatches {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 7px; /* Adjusted gap */
 }
 
 .color-swatch {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%; /* Circular swatches */
+  width: 28px; /* Adjusted size */
+  height: 28px;
+  border-radius: 50%;
   cursor: pointer;
-  border: 2px solid #fff; /* White border for definition */
+  border: 2px solid #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   transition: transform 0.2s ease;
 }
@@ -251,7 +313,7 @@
   padding: 12px 25px;
   border: none;
   border-radius: 8px;
-  font-size: 1.1em;
+  font-size: 1.05em; /* Adjusted size */
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -277,9 +339,9 @@
 }
 
 .privacy-note {
-  font-size: 0.9em;
+  font-size: 0.85em; /* Adjusted size */
   color: #555;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .App-footer {
@@ -304,11 +366,11 @@
 }
 
 .ad-placeholder-side {
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.88);
     padding: 15px;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    width: 100%; /* Full width within its column */
+    width: 100%;
     min-height: 200px; 
     display: flex;
     align-items: center;
@@ -324,18 +386,18 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 1024px) { /* Adjust breakpoint for sidebar layout */
+@media (max-width: 1024px) {
     .main-content-wrapper {
-        flex-direction: column; /* Stack sidebar and main content */
-        align-items: center; /* Center items when stacked */
+        flex-direction: column;
+        align-items: center;
     }
     .sidebar-content {
         width: 100%; 
-        max-width: 700px; /* Max width for sidebar when stacked */
+        max-width: 700px;
         margin-bottom: 20px;
     }
     .container {
-        justify-content: center; /* Center controls and preview area */
+        justify-content: center;
     }
 }
 
@@ -349,26 +411,40 @@
     padding: 20px;
   }
   .App-header h1 {
-    font-size: 2.2em;
+    font-size: 2.0em; /* Further adjust for small screens */
   }
   .App-header p {
-    font-size: 1.1em;
+    font-size: 1.0em;
   }
   .controls h2, .qr-preview h2 {
-    font-size: 1.8em;
+    font-size: 1.6em;
   }
   .download-btn {
-    padding: 12px 20px;
-    font-size: 1.1em;
+    padding: 11px 18px;
+    font-size: 1.0em;
   }
   .sidebar-content {
     padding: 15px;
+    width: 100%; /* Ensure full width on small screens */
   }
   .info-section h3 {
-    font-size: 1.2em;
+    font-size: 1.15em;
   }
   .info-section li {
     font-size: 0.9em;
+  }
+  .nav-buttons-header {
+    flex-direction: column; /* Stack nav buttons on small screens */
+    gap: 10px;
+  }
+  .nav-btn-header {
+    width: 100%;
+    max-width: 300px; /* Max width for stacked buttons */
+    margin: 0 auto; /* Center stacked buttons */
+  }
+  .faq-section-floating {
+    width: 95%;
+    padding: 20px;
   }
 }
 
