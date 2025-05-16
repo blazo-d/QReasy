@@ -423,7 +423,8 @@ function App() {
               <button onClick={downloadQRCode} className="download-btn">Download QR Code</button>
               <button onClick={shareQRCode} className="share-btn">Share QR Code</button>
             </div>
-          </div>          <div className="preview-area">
+          </div>          
+          <div className="preview-area">
               <div className="qr-preview" ref={qrRef}>
                 <h2>Preview</h2>
                 {currentQrValue ? (
@@ -455,6 +456,7 @@ function App() {
                 </div>
               </section>
           </div>
+        </main>
       </div>
       {/* FAQ section is now permanently displayed in the sidebar */}
       
