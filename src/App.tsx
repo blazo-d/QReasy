@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import './App.css';
 
-// Content for How to Use and FAQ
+// Content for How to Use
 const howToUseContent = `
 ### How to Use QReasy:
 
@@ -18,27 +18,6 @@ const howToUseContent = `
 
 That's it! Simple, fast, and free.
 `;
-
-const faqContent = `
-### Frequently Asked Questions (FAQ)
-
-**Q1: Is QReasy completely free to use?**
-
-A1: Yes! QReasy is 100% free for generating all types of static QR codes with full customization options. The website is supported by advertisements.
-
-**Q2: Do I need to create an account to use the QR code generator?**
-
-A2: No account is needed. You can start creating QR codes right away.
-
-**Q3: What types of QR codes can I create?**
-
-A3: You can create QR codes for URLs (website links), plain text, Wi-Fi network access, basic event details (like a calendar reminder), and direct links to online menus.
-
-**Q4: Can I customize the appearance of my QR codes?**
-
-A4: Absolutely! You can customize the QR code color, background color, and even embed your own logo in the center. You can also adjust the logo size.
-
-**Q5: What format is the QR code downloaded in?**
 
 A5: QR codes are downloaded as high-quality PNG image files, which are suitable for both digital use and printing.
 
