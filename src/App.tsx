@@ -23,38 +23,48 @@ const faqContent = `
 ### Frequently Asked Questions (FAQ)
 
 **Q1: Is QReasy completely free to use?**
-<br />A1: Yes! QReasy is 100% free for generating all types of static QR codes with full customization options. The website is supported by advertisements.
+
+A1: Yes! QReasy is 100% free for generating all types of static QR codes with full customization options. The website is supported by advertisements.
 
 **Q2: Do I need to create an account to use the QR code generator?**
-<br />A2: No account is needed. You can start creating QR codes right away.
+
+A2: No account is needed. You can start creating QR codes right away.
 
 **Q3: What types of QR codes can I create?**
-<br />A3: You can create QR codes for URLs (website links), plain text, Wi-Fi network access, basic event details (like a calendar reminder), and direct links to online menus.
+
+A3: You can create QR codes for URLs (website links), plain text, Wi-Fi network access, basic event details (like a calendar reminder), and direct links to online menus.
 
 **Q4: Can I customize the appearance of my QR codes?**
-<br />A4: Absolutely! You can customize the QR code color, background color, and even embed your own logo in the center. You can also adjust the logo size.
+
+A4: Absolutely! You can customize the QR code color, background color, and even embed your own logo in the center. You can also adjust the logo size.
 
 **Q5: What format is the QR code downloaded in?**
-<br />A5: QR codes are downloaded as high-quality PNG image files, which are suitable for both digital use and printing.
+
+A5: QR codes are downloaded as high-quality PNG image files, which are suitable for both digital use and printing.
 
 **Q6: Are the QR codes I create tracked? What about privacy?**
-<br />A6: We prioritize your privacy. The static QR codes generated on QReasy are not tracked. Once you download your QR code, it works independently and does not send any data back to us.
+
+A6: We prioritize your privacy. The static QR codes generated on QReasy are not tracked. Once you download your QR code, it works independently and does not send any data back to us.
 
 **Q7: Will my QR codes expire?**
-<br />A7: No, the static QR codes you create with QReasy do not expire. As long as the data encoded (like a website URL) remains valid, your QR code will continue to work indefinitely.
+
+A7: No, the static QR codes you create with QReasy do not expire. As long as the data encoded (like a website URL) remains valid, your QR code will continue to work indefinitely.
 
 **Q8: What is the optimal size for a logo in the QR code?**
-<br />A8: While you can adjust the logo size, it's best to keep it relatively small (the tool allows up to 30% of the QR code area) to ensure the QR code remains easily scannable. A clear, simple logo works best. Non-square logos will maintain their original aspect ratio.
+
+A8: While you can adjust the logo size, it's best to keep it relatively small (the tool allows up to 30% of the QR code area) to ensure the QR code remains easily scannable. A clear, simple logo works best. Non-square logos will maintain their original aspect ratio.
 
 **Q9: My QR code isn't scanning. What could be wrong?**
-<br />A9: 
-    *   Ensure the contrast between your QR code color and background color is high enough.
-    *   If you added a logo, try making it smaller or removing it to see if that helps.
-    *   Make sure the data you entered (e.g., URL) is correct and not too long for a QR code to handle reliably without becoming too dense.
-    *   Test with different QR code scanning apps and devices.
+
+A9: 
+* Ensure the contrast between your QR code color and background color is high enough.
+* If you added a logo, try making it smaller or removing it to see if that helps.
+* Make sure the data you entered (e.g., URL) is correct and not too long for a QR code to handle reliably without becoming too dense.
+* Test with different QR code scanning apps and devices.
 
 **Q10: How does this website make money if it's free?**
-<br />A10: QReasy is supported by the advertisements displayed on the website. This allows us to offer the QR code generation service for free to all users.
+
+A10: QReasy is supported by the advertisements displayed on the website. This allows us to offer the QR code generation service for free to all users.
 `;
 
 const colorPalettes = {
@@ -285,14 +295,6 @@ function App() {
       <div className="main-content-wrapper">
         <aside className="sidebar-content">
           <section className="info-section guide-section" dangerouslySetInnerHTML={renderMarkdown(howToUseContent, true)} />
-          {/* Example Images Section */}
-          <section className="example-images-section">
-            <h4>QR Codes in Action</h4>
-            <div className="example-image-container">
-              <img src="/images/qr_brochure_example.jpeg" alt="QR code on a brochure example" />
-              {/* Add more images here if needed */}
-            </div>
-          </section>
           {/* FAQ Section moved to full-width section below */}
         </aside>
 
@@ -421,37 +423,38 @@ function App() {
               <button onClick={downloadQRCode} className="download-btn">Download QR Code</button>
               <button onClick={shareQRCode} className="share-btn">Share QR Code</button>
             </div>
-          </div>
-
-          <div className="preview-area">
+          </div>          <div className="preview-area">
               <div className="qr-preview" ref={qrRef}>
-              <h2>Preview</h2>
-              {currentQrValue ? (
-                  <QRCodeCanvas 
-                  value={currentQrValue} 
-                  size={256} 
-                  fgColor={qrColor}
-                  bgColor={qrBgColor}
-                  level={"H"} 
-                  imageSettings={qrLogo && logoDimensions.width > 0 ? {
-                      src: qrLogo,
-                      height: logoDimensions.height,
-                      width: logoDimensions.width,
-                      excavate: true,
-                      x: undefined, // Let library center it
-                      y: undefined,
-                  } : undefined}
-                  />
-              ) : <p>Please enter data to generate QR code.</p>}
-              <p className="privacy-note">We respect your privacy. Static QR codes generated here are not tracked.</p>
+                <h2>Preview</h2>
+                {currentQrValue ? (
+                    <QRCodeCanvas 
+                    value={currentQrValue} 
+                    size={256} 
+                    fgColor={qrColor}
+                    bgColor={qrBgColor}
+                    level={"H"} 
+                    imageSettings={qrLogo && logoDimensions.width > 0 ? {
+                        src: qrLogo,
+                        height: logoDimensions.height,
+                        width: logoDimensions.width,
+                        excavate: true,
+                    } : undefined}
+                    />
+                ) : (
+                    <p>Enter data to generate QR code</p>
+                )}
+                <p className="privacy-note">Your data is processed locally. We don't store or track your QR codes.</p>
               </div>
-              <div className="ad-placeholder-side">
-                  <p>Advertisement</p>
-                  {/* Example: <img src="https://via.placeholder.com/300x250.png?text=Ad+Space+Side" alt="Advertisement" /> */}
-              </div>
+              
+              {/* Example Images Section - Moved next to preview */}
+              <section className="example-images-section">
+                <h4>QR Codes in Action</h4>
+                <div className="example-image-container">
+                  <img src="/images/mobile_qr_intro.jpeg" alt="Mobile phone creating a QR code" />
+                  <img src="/images/qr_brochure_example.jpeg" alt="QR code on a brochure example" />
+                </div>
+              </section>
           </div>
-
-        </main>
       </div>
       {/* FAQ section is now permanently displayed in the sidebar */}
       
