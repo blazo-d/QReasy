@@ -124,7 +124,10 @@ function App() {
       case 'url':
       default:
         return qrValue;
-    }  const shareQRCode = async () => {
+    }
+  };
+
+  const shareQRCode = async () => {
     const canvas = qrRef.current?.querySelector("canvas");
     if (canvas) {
       try {
@@ -150,7 +153,7 @@ function App() {
       }
     }
   };
-wnloadQRCode = () => {
+  const downloadQRCode = () => {
     const canvas = qrRef.current?.querySelector('canvas');
     if (canvas) {
       const pngUrl = canvas
