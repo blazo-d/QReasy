@@ -1,8 +1,386 @@
-/* Full-width FAQ Section - Canva Style */
+/* Global Styles */
+:root {
+  --primary-color: #046dc8;
+  --primary-light: #e3f2fd;
+  --secondary-color: #ff5722;
+  --text-dark: #333333;
+  --text-light: #ffffff;
+  --background-light: #f9f9f9;
+  --background-white: #ffffff;
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --section-spacing: 80px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: var(--background-light);
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header Styles */
+.App-header {
+  background-color: var(--background-white);
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 10px var(--shadow-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.App-header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 5px;
+  color: var(--primary-color);
+}
+
+.App-header p {
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  opacity: 0.8;
+}
+
+/* Section Containers */
+.section-container {
+  width: 100%;
+  padding: 60px 20px;
+  margin: 0 auto;
+}
+
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: var(--text-dark);
+}
+
+.section-header p {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  color: var(--text-dark);
+  opacity: 0.8;
+}
+
+/* Intro Section */
+.intro-section-container {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  padding: 60px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--section-spacing);
+}
+
+.intro-text {
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+}
+
+.intro-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--text-light);
+}
+
+.intro-text p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.intro-image {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.intro-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Main Content Layout */
+.main-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto 60px;
+}
+
+/* Customize Section */
+.customize-section {
+  background-color: var(--background-white);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px var(--shadow-color);
+  padding: 40px;
+  margin-bottom: var(--section-spacing);
+}
+
+.customize-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+/* Controls and Preview Layout */
+.controls-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+}
+
+/* Controls Styles */
+.controls {
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
+}
+
+.control-group {
+  margin-bottom: 25px;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.control-group input,
+.control-group select,
+.control-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.control-group input:focus,
+.control-group select:focus,
+.control-group textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.control-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Preview Styles */
+.preview {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: var(--background-light);
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px var(--shadow-color);
+}
+
+.preview h3 {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.qr-preview-container {
+  background-color: var(--background-white);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  justify-content: center;
+}
+
+.action-buttons button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.download-btn {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+}
+
+.share-btn {
+  background-color: var(--secondary-color);
+  color: var(--text-light);
+}
+
+.download-btn:hover,
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+/* How to Use Section */
+.guide-section {
+  background-color: var(--background-white);
+  border-radius: 10px;
+  padding: 40px;
+  margin-bottom: var(--section-spacing);
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.guide-section h3 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.guide-section ol {
+  margin-left: 20px;
+}
+
+.guide-section li {
+  margin-bottom: 15px;
+}
+
+.guide-section strong {
+  color: var(--primary-color);
+}
+
+/* Examples Section */
+.examples-section {
+  background-color: var(--primary-light);
+  padding: 60px 20px;
+  margin-bottom: var(--section-spacing);
+}
+
+.examples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.example-card {
+  background-color: var(--background-white);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px var(--shadow-color);
+  transition: transform 0.3s ease;
+}
+
+.example-card:hover {
+  transform: translateY(-5px);
+}
+
+.example-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.example-card-content {
+  padding: 20px;
+}
+
+.example-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.example-card p {
+  font-size: 1rem;
+  color: var(--text-dark);
+  opacity: 0.8;
+}
+
+/* Color Palette Chooser */
+.palette-chooser {
+  margin-top: 10px;
+}
+
+.palette-select {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.color-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.color-swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+/* FAQ Section - Canva Style */
 .faq-section-container {
   width: 100%;
   max-width: 1000px;
-  margin: 25px auto;
+  margin: 0 auto 60px;
   padding: 0;
   border-radius: 10px;
   overflow: hidden;
@@ -124,8 +502,55 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-/* Responsive adjustments */
+/* Footer */
+.footer {
+  background-color: var(--text-dark);
+  color: var(--text-light);
+  padding: 40px 20px;
+  text-align: center;
+  margin-top: auto;
+}
+
+.footer p {
+  margin-bottom: 10px;
+}
+
+.footer a {
+  color: var(--primary-light);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
+  .intro-section-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .intro-text, .intro-image {
+    min-width: 100%;
+  }
+  
+  .section-container {
+    padding: 40px 15px;
+  }
+  
+  .customize-section {
+    padding: 30px 20px;
+  }
+  
+  .controls-preview-container {
+    flex-direction: column;
+  }
+  
+  .controls, .preview {
+    min-width: 100%;
+  }
+  
   .faq-header {
     padding: 15px 20px;
   }
@@ -136,5 +561,23 @@
   
   .faq-content.open {
     padding: 20px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .intro-text h2 {
+    font-size: 2rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.6rem;
   }
 }
