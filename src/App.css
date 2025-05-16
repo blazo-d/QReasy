@@ -5,8 +5,7 @@
   text-align: center;
   font-family: "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   color: #333;
-  /* Canva-inspired subtle gradient or light solid color */
-  background: #f8f9fa; /* Light gray as a base, Canva uses very light, often off-white or subtle gradients */
+  background: #f8f9fa;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -14,73 +13,89 @@
 }
 
 .App-header {
-  background-color: #ffffff; /* White background like Canva's header area */
-  padding: 20px 30px; 
-  color: #333333; /* Darker text for better contrast on white */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Softer shadow */
-  text-align: left; /* Canva often has left-aligned header content */
+  background-color: #ffffff;
+  padding: 20px 30px;
+  color: #333333;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  text-align: left;
 }
 
 .App-header h1 {
-  margin: 0 0 5px 0; 
-  font-size: 2.2em; 
+  margin: 0 0 5px 0;
+  font-size: 2.2em;
   font-weight: 700;
-  color: #1a0dab; /* Canva-like deep blue/purple for headings */
+  color: #1a0dab;
 }
 
 .App-header p {
-  font-size: 1.05em; 
+  font-size: 1.05em;
   margin-top: 0;
-  color: #5f6368; /* Softer gray for subtext */
-  max-width: none; /* Allow full width for left alignment */
+  color: #5f6368;
+  max-width: none;
   margin-left: 0;
   margin-right: 0;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
-.nav-buttons-header {
-  display: flex;
-  justify-content: flex-start; /* Align with left-aligned header text */
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.nav-btn-header {
+/* New Intro Section Styles */
+.intro-section-container {
   background-color: #e8f0fe; /* Light blue, Canva-esque */
-  color: #1a0dab; /* Dark blue text */
-  border: 1px solid #d2e3fc;
-  padding: 10px 22px;
-  border-radius: 25px; /* More rounded like Canva buttons */
-  cursor: pointer;
-  font-size: 0.9em;
-  font-weight: 600;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  padding: 40px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* For text and image */
+  gap: 30px;
+  border-bottom: 1px solid #d2e3fc;
 }
 
-.nav-btn-header:hover {
-  background-color: #d2e3fc;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transform: translateY(-1px);
+.intro-text {
+  max-width: 60%;
+  text-align: left;
 }
 
-/* Main Content Layout */
+.intro-text h2 {
+  color: #1a0dab;
+  font-size: 1.8em;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.intro-text p {
+  color: #3c4043;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+.intro-image img {
+  max-width: 300px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Main Content Layout - Adjusted for better distribution */
 .main-content-wrapper {
   display: flex;
   flex-direction: row;
   flex-grow: 1;
-  padding: 30px;
-  gap: 30px;
-  background-color: #f0f2f5; /* Light grey background for content area, common in dashboards */
+  padding: 25px;
+  gap: 25px;
+  background-color: #f0f2f5;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .sidebar-content {
-  width: 300px; 
+  width: 25%; /* Adjust width, e.g., 25% */
+  min-width: 320px; /* Minimum width for readability */
+  max-width: 400px; /* Max width */
   flex-shrink: 0;
   background-color: #ffffff;
   padding: 25px;
-  border-radius: 10px; /* Canva uses subtle rounding */
+  border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   height: fit-content;
+  overflow-y: auto; /* In case content is too long */
 }
 
 .info-section {
@@ -100,78 +115,71 @@
 }
 
 .info-section h3 {
-  color: #1a0dab; /* Consistent heading color */
+  color: #1a0dab;
   margin-top: 0;
-  margin-bottom: 15px; 
-  border-bottom: 1px solid #e0e0e0; /* Lighter border */
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
   padding-bottom: 10px;
-  font-size: 1.2em; 
+  font-size: 1.2em;
   font-weight: 600;
 }
 
 .info-section ol {
-  list-style-type: decimal; 
-  list-style-position: outside; 
-  padding-left: 20px; 
+  list-style-type: decimal;
+  list-style-position: outside;
+  padding-left: 20px;
   margin: 0;
 }
 
-.info-section ol ol { 
+.info-section ol ol {
     list-style-type: lower-alpha;
-    padding-left: 25px; 
+    padding-left: 25px;
     margin-top: 8px;
 }
 
 .info-section li {
-  margin-bottom: 10px; 
-  line-height: 1.7; 
+  margin-bottom: 10px;
+  line-height: 1.7;
   font-size: 0.9rem;
   color: #3c4043;
 }
 
 .info-section strong {
-    color: #000000; /* Stronger emphasis */
+    color: #000000;
     font-weight: 600;
 }
 
-/* FAQ Section - Floating/Toggleable */
-.faq-section-floating {
-  background-color: #ffffff;
-  margin: 20px auto;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-  width: 90%;
-  max-width: 800px;
-  box-sizing: border-box;
-  text-align: left;
-}
-.faq-section-floating h3 {
+/* FAQ Section in Sidebar */
+.faq-section-sidebar h3 {
   color: #1a0dab;
-  margin-top: 0;
-  margin-bottom: 20px;
+  margin-top: 20px; /* Add some space above FAQ if it follows another section */
+  margin-bottom: 15px;
   border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 12px;
-  font-size: 1.3em;
+  padding-bottom: 10px;
+  font-size: 1.2em;
   font-weight: 600;
 }
-.faq-section-floating ul {
-  list-style-type: none; 
+
+.faq-section-sidebar ul {
+  list-style-type: none;
   padding-left: 0;
 }
-.faq-section-floating li {
-  margin-bottom: 15px;
-  line-height: 1.65;
+
+.faq-section-sidebar li {
+  margin-bottom: 12px;
+  line-height: 1.6;
   color: #3c4043;
+  font-size: 0.9rem;
 }
+
 
 .container {
   display: flex;
-  flex-wrap: nowrap; /* Prevent wrapping to keep preview and ad side-by-side before media query */
-  justify-content: flex-start;
-  flex-grow: 1;
-  gap: 30px;
+  flex-direction: row; /* Keep controls and preview side-by-side */
+  flex-grow: 1; /* Allow this to take remaining space */
+  gap: 25px;
   padding: 0;
+  justify-content: flex-start; /* Align items to the start */
 }
 
 .controls {
@@ -179,8 +187,9 @@
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  width: 100%;
-  max-width: 480px; 
+  width: 45%; /* Adjust width, e.g., 45% */
+  min-width: 400px;
+  max-width: 550px;
   box-sizing: border-box;
   height: fit-content;
 }
@@ -190,8 +199,9 @@
     flex-direction: column;
     align-items: center;
     gap: 25px;
-    width: 100%;
-    max-width: 320px; 
+    width: 30%; /* Adjust width, e.g., 30% */
+    min-width: 300px;
+    max-width: 380px;
     height: fit-content;
 }
 
@@ -200,7 +210,7 @@
   padding: 25px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  width: 100%; 
+  width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -211,23 +221,23 @@
   color: #1a0dab;
   margin-top: 0;
   margin-bottom: 20px;
-  font-size: 1.5em; 
+  font-size: 1.5em;
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 12px;
   font-weight: 600;
 }
 
 .control-group {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   text-align: left;
 }
 
 .control-group label {
   display: block;
-  margin-bottom: 8px; 
-  font-weight: 500; /* Medium weight for labels */
+  margin-bottom: 8px;
+  font-weight: 500;
   color: #3c4043;
-  font-size: 0.95em; 
+  font-size: 0.95em;
 }
 
 .control-group input[type="text"],
@@ -236,11 +246,11 @@
 .control-group textarea,
 .control-group select {
   width: 100%;
-  padding: 12px 15px; /* More padding */
-  border: 1px solid #dadce0; /* Google-like input border */
-  border-radius: 8px; /* More rounded */
+  padding: 12px 15px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
   box-sizing: border-box;
-  font-size: 0.95em; 
+  font-size: 0.95em;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   background-color: #fff;
 }
@@ -250,14 +260,14 @@
 .control-group input[type="date"]:focus,
 .control-group textarea:focus,
 .control-group select:focus {
-  border-color: #1a73e8; /* Google blue focus */
+  border-color: #1a73e8;
   box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
   outline: none;
 }
 
 .control-group input[type="color"] {
   width: 100%;
-  height: 42px; 
+  height: 42px;
   border: 1px solid #dadce0;
   border-radius: 8px;
   padding: 0;
@@ -273,11 +283,11 @@
 
 /* Color Palette Styles */
 .palette-chooser {
-  margin-top: 10px; 
+  margin-top: 10px;
 }
 
 .palette-chooser label {
-  font-size: 0.9em; 
+  font-size: 0.9em;
   color: #5f6368;
   margin-bottom: 6px;
   display: block;
@@ -285,7 +295,7 @@
 
 .palette-select {
   width: 100%;
-  padding: 10px 12px; 
+  padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid #dadce0;
   margin-bottom: 10px;
@@ -296,15 +306,15 @@
 .color-swatches {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px; 
+  gap: 8px;
 }
 
 .color-swatch {
-  width: 30px; 
+  width: 30px;
   height: 30px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid #e0e0e0; /* Lighter border for swatches */
+  border: 2px solid #e0e0e0;
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
@@ -314,26 +324,35 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
-.download-btn {
-  background-color: #1a73e8; /* Primary action blue */
+.action-buttons {
+  display: flex;
+  gap: 15px; /* Space between download and share buttons */
+  margin-top: 25px;
+}
+
+.download-btn, .share-btn {
+  background-color: #1a73e8;
   color: white;
-  padding: 12px 28px;
+  padding: 12px 20px; /* Adjusted padding for two buttons */
   border: none;
-  border-radius: 25px; /* Pill shape */
-  font-size: 1em; 
+  border-radius: 25px;
+  font-size: 0.95em; /* Slightly smaller if two buttons */
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   display: block;
-  width: 100%;
-  margin-top: 25px;
-  text-transform: none; /* Canva buttons are often sentence case */
+  flex-grow: 1; /* Allow buttons to share space */
+  text-transform: none;
   letter-spacing: 0.2px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.download-btn:hover {
-  background-color: #1765cc; /* Darker blue on hover */
+.share-btn {
+  background-color: #4285f4; /* Slightly different blue for share or secondary color */
+}
+
+.download-btn:hover, .share-btn:hover {
+  background-color: #1765cc;
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
@@ -341,23 +360,23 @@
 .qr-preview canvas {
   display: block;
   margin: 0 auto 15px auto;
-  border: 1px solid #e0e0e0; /* Subtle border for canvas */
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .privacy-note {
-  font-size: 0.8em; 
+  font-size: 0.8em;
   color: #5f6368;
   margin-top: 20px;
 }
 
 .App-footer {
-  background-color: #f8f9fa; /* Consistent light background */
+  background-color: #f8f9fa;
   color: #5f6368;
   padding: 25px 30px;
   font-size: 0.85em;
-  border-top: 1px solid #e0e0e0; /* Separator line */
+  border-top: 1px solid #e0e0e0;
   text-align: center;
 }
 
@@ -368,7 +387,7 @@
 .ad-placeholder {
   margin-top: 15px;
   padding: 15px;
-  background-color: #e9ecef; /* Slightly darker placeholder bg */
+  background-color: #e9ecef;
   border-radius: 8px;
   border: 1px dashed #adb5bd;
   text-align: center;
@@ -380,7 +399,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     width: 100%;
-    min-height: 250px; 
+    min-height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -399,7 +418,7 @@
 .example-images-section {
   margin-top: 20px;
   padding: 15px;
-  background-color: #e8f0fe; /* Light blue background */
+  background-color: #e8f0fe;
   border-radius: 8px;
 }
 
@@ -419,8 +438,8 @@
 }
 
 .example-image-container img {
-  max-width: 150px;
-  max-height: 150px;
+  max-width: 120px; /* Slightly smaller for sidebar */
+  max-height: 120px;
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   object-fit: cover;
@@ -428,22 +447,26 @@
 
 
 /* Responsive adjustments */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) { /* Adjust breakpoint for three columns */
     .main-content-wrapper {
         flex-direction: column;
         align-items: center;
     }
     .sidebar-content {
-        width: 100%; 
-        max-width: 750px; /* Wider for tablet */
+        width: 100%;
+        max-width: 800px; /* Wider for tablet */
         margin-bottom: 25px;
+        order: 1; /* Sidebar first */
     }
     .container {
-        justify-content: center;
-        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        flex-direction: column; /* Stack controls and preview */
+        align-items: center;
+        width: 100%;
+        max-width: 800px; /* Consistent max width */
+        order: 2; /* Controls/Preview after sidebar */
     }
     .controls, .preview-area {
-      max-width: 480px; /* Allow controls and preview to stack nicely */
+      max-width: 100%; /* Allow controls and preview to take full width of container */
       width: 100%;
     }
 }
@@ -453,10 +476,22 @@
     padding: 15px 20px;
   }
   .App-header h1 {
-    font-size: 1.8em; 
+    font-size: 1.8em;
   }
   .App-header p {
     font-size: 0.95em;
+  }
+  .intro-section-container {
+    flex-direction: column;
+    padding: 25px 20px;
+  }
+  .intro-text {
+    max-width: 100%;
+    text-align: center;
+  }
+  .intro-image img {
+    max-width: 250px;
+    margin-top: 20px;
   }
   .main-content-wrapper {
     padding: 20px;
@@ -464,7 +499,11 @@
   }
   .sidebar-content {
     padding: 20px;
-    width: 100%; 
+    width: 100%;
+    max-width: none; /* Full width on mobile */
+  }
+  .container {
+    max-width: none; /* Full width on mobile */
   }
   .controls, .preview-area {
     padding: 20px;
@@ -472,9 +511,11 @@
   .controls h2, .qr-preview h2 {
     font-size: 1.3em;
   }
-  .download-btn {
-    padding: 12px 20px;
-    font-size: 0.95em;
+  .action-buttons {
+    flex-direction: column; /* Stack buttons on small screens */
+  }
+  .download-btn, .share-btn {
+    font-size: 1em;
   }
   .info-section h3 {
     font-size: 1.1em;
@@ -482,22 +523,11 @@
   .info-section li {
     font-size: 0.85rem;
   }
-  .nav-buttons-header {
-    flex-direction: column; 
-    gap: 10px;
-    align-items: flex-start;
+  .faq-section-sidebar h3 {
+    font-size: 1.1em;
   }
-  .nav-btn-header {
-    width: auto; /* Don't make them full width */
-    max-width: none;
-    margin: 0;
-  }
-  .faq-section-floating {
-    width: 95%;
-    padding: 20px;
-  }
-  .container {
-    gap: 20px;
+  .faq-section-sidebar li {
+    font-size: 0.85rem;
   }
 }
 
@@ -507,6 +537,12 @@
   }
   .App-header p {
     font-size: 0.9em;
+  }
+  .intro-text h2 {
+    font-size: 1.5em;
+  }
+  .intro-text p {
+    font-size: 1em;
   }
   .controls h2, .qr-preview h2 {
     font-size: 1.2em;
@@ -519,7 +555,7 @@
     padding: 10px 12px;
     font-size: 0.9em;
   }
-  .download-btn {
+  .download-btn, .share-btn {
     font-size: 0.9em;
   }
 }

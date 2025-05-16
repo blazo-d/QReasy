@@ -127,6 +127,33 @@ function App() {
     }
   };
 
+  const shareQRCode = async () => {
+    const canvas = qrRef.current?.querySelector(\'canvas\');
+    if (canvas) {
+      try {
+        canvas.toBlob(async (blob) => {
+          if (blob) {
+            const file = new File([blob], \'qreasy-code.png\', { type: \'image/png\' });
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                files: [file],
+                title: \'My QR Code from QReasy\',
+                text: \'Check out this QR Code I made!\',
+              });
+            } else {
+              alert(\'Web Share API is not supported in your browser, or cannot share files. Please download the QR code to share it.\');
+              // Fallback: Trigger download if sharing is not possible but was attempted
+              downloadQRCode(); 
+            }
+          }
+        }, \'image/png\');
+      } catch (error) {
+        console.error(\'Error sharing QR Code:\', error);
+        alert(\'Could not share QR Code. Please try downloading instead.\');
+      }
+    }
+  };
+
   const downloadQRCode = () => {
     const canvas = qrRef.current?.querySelector('canvas');
     if (canvas) {
@@ -241,10 +268,20 @@ function App() {
       <header className="App-header">
         <h1>QReasy: Free QR Code Generator</h1>
         <p>Create custom QR codes for free. User-friendly and privacy-focused.</p>
-        <div className="nav-buttons-header">
-            <button onClick={() => setShowFaq(!showFaq)} className="nav-btn-header">{showFaq ? 'Hide FAQ' : 'Show FAQ'}</button>
-        </div>
+        {/* FAQ button removed from header */}
       </header>
+
+      {/* New Intro Section */}
+      <div className="intro-section-container">
+        <div className="intro-text">
+          <h2>Our Free and Easy QR Code Generator</h2>
+          <p>Reach new clients with a free QR code. Ideal for marketing and sales teams. You can use it for accessing your contact details, your website, your event, your menu, your wi-fi code.</p>
+        </div>
+        <div className="intro-image">
+          {/* Placeholder for mobile phone with QR code image - to be added in next step */}
+          <img src="/images/mobile_qr_intro.jpeg" alt="Mobile phone creating a QR code" />
+        </div>
+      </div>
 
       <div className="main-content-wrapper">
         <aside className="sidebar-content">
@@ -257,6 +294,8 @@ function App() {
               {/* Add more images here if needed */}
             </div>
           </section>
+          {/* FAQ Section moved to sidebar */}
+          <section className="info-section faq-section-sidebar" dangerouslySetInnerHTML={renderMarkdown(faqContent)} />
         </aside>
 
         <main className="container">
@@ -380,7 +419,10 @@ function App() {
                   />
               </div>
             )}
-            <button onClick={downloadQRCode} className="download-btn">Download QR Code</button>
+            <div className="action-buttons">
+              <button onClick={downloadQRCode} className="download-btn">Download QR Code</button>
+              <button onClick={shareQRCode} className="share-btn">Share QR Code</button>
+            </div>
           </div>
 
           <div className="preview-area">
