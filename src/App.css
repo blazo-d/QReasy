@@ -39,13 +39,13 @@
 
 /* New Intro Section Styles */
 .intro-section-container {
-  background-color: #e8f0fe; /* Light blue, Canva-esque */
+  background-color: #046dc8; /* Changed to requested blue color */
   padding: 40px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between; /* For text and image */
   gap: 30px;
-  border-bottom: 1px solid #d2e3fc;
+  border-bottom: 1px solid #0356a0;
 }
 
 .intro-text {
@@ -54,14 +54,14 @@
 }
 
 .intro-text h2 {
-  color: #1a0dab;
+  color: #ffffff; /* Changed to white text */
   font-size: 1.8em;
   font-weight: 700;
   margin-bottom: 15px;
 }
 
 .intro-text p {
-  color: #3c4043;
+  color: #ffffff; /* Changed to white text */
   font-size: 1.1em;
   line-height: 1.6;
 }
@@ -560,3 +560,61 @@
   }
 }
 
+
+/* Full-width FAQ Section */
+.faq-section-container {
+  width: 100%;
+  background-color: #ffffff;
+  margin: 25px 0;
+  padding: 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+.faq-header:hover {
+  background-color: #f0f2f5;
+}
+
+.faq-header h3 {
+  margin: 0;
+  color: #1a0dab;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.faq-toggle-icon {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.faq-toggle-icon.open {
+  transform: rotate(180deg);
+}
+
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 30px;
+}
+
+.faq-content.open {
+  max-height: 2000px; /* Arbitrary large value to accommodate all content */
+  padding: 20px 30px;
+}

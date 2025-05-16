@@ -90,6 +90,7 @@ function App() {
 
   const qrRef = useRef<HTMLDivElement>(null);
   const [selectedPalette, setSelectedPalette] = useState<keyof typeof colorPalettes>('default');
+  const [faqExpanded, setFaqExpanded] = useState(false);
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -292,8 +293,7 @@ function App() {
               {/* Add more images here if needed */}
             </div>
           </section>
-          {/* FAQ Section moved to sidebar */}
-          <section className="info-section faq-section-sidebar" dangerouslySetInnerHTML={renderMarkdown(faqContent)} />
+          {/* FAQ Section moved to full-width section below */}
         </aside>
 
         <main className="container">
@@ -454,6 +454,20 @@ function App() {
         </main>
       </div>
       {/* FAQ section is now permanently displayed in the sidebar */}
+      
+      {/* Full-width FAQ Section */}
+      <div className="faq-section-container">
+        <div className="faq-header" onClick={() => setFaqExpanded(!faqExpanded)}>
+          <h3>Frequently Asked Questions (FAQ)</h3>
+          <div className={`faq-toggle-icon ${faqExpanded ? 'open' : ''}`}>
+            {faqExpanded ? '▲' : '▼'}
+          </div>
+        </div>
+        <div className={`faq-content ${faqExpanded ? 'open' : ''}`}>
+          <div dangerouslySetInnerHTML={renderMarkdown(faqContent)} />
+        </div>
+      </div>
+      
       <footer className="App-footer">
         <p>&copy; {new Date().getFullYear()} QReasy. All rights reserved.</p>
         <div className="ad-placeholder ad-placeholder-footer">
