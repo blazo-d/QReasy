@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, ChangeEvent, ReactNode } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import './App.css';
 
@@ -86,7 +86,12 @@ const exampleCases = [
   }
 ];
 
-const colorPalettes = {
+// Define color palettes with proper typing
+type ColorPalettes = {
+  [key: string]: string[];
+};
+
+const colorPalettes: ColorPalettes = {
   default: ['#000000', '#FFFFFF', '#4A90E2', '#F5A623', '#D0021B', '#7ED321'],
   vintage: ['#5D4037', '#D7CCC8', '#8D6E63', '#A1887F', '#EFEBE9'],
   ocean: ['#0077B6', '#00B4D8', '#90E0EF', '#CAF0F8', '#ADE8F4'],
@@ -95,205 +100,136 @@ const colorPalettes = {
 };
 
 function App() {
-  const [qrValue, setQrValue] = useState('https://manus.ai');
-  const [qrColor, setQrColor] = useState('#000000');
-  const [qrBgColor, setQrBgColor] = useState('#FFFFFF');
-  const [qrLogo, setQrLogo] = useState<string>('');
-  const [logoSize, setLogoSize] = useState(0.15); // Default logo size
-  const [logoNaturalWidth, setLogoNaturalWidth] = useState<number | null>(null);
-  const [logoNaturalHeight, setLogoNaturalHeight] = useState<number | null>(null);
-  const [qrType, setQrType] = useState('url');
-
-  const [wifiSsid, setWifiSsid] = useState('');
-  const [wifiPassword, setWifiPassword] = useState('');
-  const [wifiEncryption, setWifiEncryption] = useState('WPA');
-
-  const [eventName, setEventName] = useState('');
-  const [eventStartDate, setEventStartDate] = useState('');
-  const [eventEndDate, setEventEndDate] = useState('');
-  const [eventLocation, setEventLocation] = useState('');
-  const [eventDescription, setEventDescription] = useState('');
-
-  const [menuUrl, setMenuUrl] = useState('');
-  const [textValue, setTextValue] = useState('');
-
+  const [qrValue, setQrValue] = useState<string>('https://manus.ai');
+  const [qrColor, setQrColor] = useState<string>('#000000');
+  const [qrBgColor, setQrBgColor] = useState<string>('#FFFFFF');
+  const qrSize = 200; // Fixed size, no need for state
+  const [qrType, setQrType] = useState<string>('url');
+  const [textValue, setTextValue] = useState<string>('Hello, this is a text QR code!');
+  const [wifiSsid, setWifiSsid] = useState<string>('');
+  const [wifiPassword, setWifiPassword] = useState<string>('');
+  const [wifiEncryption, setWifiEncryption] = useState<string>('WPA');
+  const [eventName, setEventName] = useState<string>('');
+  const [eventStartDate, setEventStartDate] = useState<string>('');
+  const [eventEndDate, setEventEndDate] = useState<string>('');
+  const [eventLocation, setEventLocation] = useState<string>('');
+  const [menuUrl, setMenuUrl] = useState<string>('https://example.com/menu');
+  const [logoFile, setLogoFile] = useState<string | null>(null);
+  const [logoSize, setLogoSize] = useState<number>(30);
+  const [selectedPalette, setSelectedPalette] = useState<string>('default');
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const qrRef = useRef<HTMLDivElement>(null);
-  const [selectedPalette, setSelectedPalette] = useState<keyof typeof colorPalettes>('default');
-  const [expandedFaqIndex, setExpandedFaqIndex] = useState<number | null>(null);
 
-  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
+  // Function to handle QR code download
+  const handleDownload = () => {
+    if (qrRef.current) {
+      const canvas = qrRef.current.querySelector('canvas');
+      if (canvas) {
+        const url = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `qr-code-${qrType}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  };
+
+  // Function to handle logo file upload
+  const handleLogoUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-          setQrLogo(reader.result);
-          const img = new Image();
-          img.onload = () => {
-            setLogoNaturalWidth(img.naturalWidth);
-            setLogoNaturalHeight(img.naturalHeight);
-          };
-          img.src = reader.result;
+      reader.onload = (event: ProgressEvent<FileReader>) => {
+        if (event.target?.result) {
+          setLogoFile(event.target.result as string);
         }
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const generateQrValue = () => {
+  // Function to generate QR code value based on type
+  const generateQrValue = (): string => {
     switch (qrType) {
-      case 'wifi':
-        return `WIFI:S:${wifiSsid};T:${wifiEncryption};P:${wifiPassword};;`;
-      case 'event':
-        return `BEGIN:VEVENT\nSUMMARY:${eventName}\nDTSTART:${eventStartDate.replace(/-/g, '')}T000000\nDTEND:${eventEndDate.replace(/-/g, '')}T000000\nLOCATION:${eventLocation}\nDESCRIPTION:${eventDescription}\nEND:VEVENT`;
-      case 'menu':
-        return menuUrl;
+      case 'url':
+        return qrValue;
       case 'text':
         return textValue;
-      case 'url':
+      case 'wifi':
+        return `WIFI:T:${wifiEncryption};S:${wifiSsid};P:${wifiPassword};;`;
+      case 'event':
+        return `BEGIN:VEVENT\nSUMMARY:${eventName}\nDTSTART:${eventStartDate.replace(/-/g, '')}\nDTEND:${eventEndDate.replace(/-/g, '')}\nLOCATION:${eventLocation}\nEND:VEVENT`;
+      case 'menu':
+        return menuUrl;
       default:
         return qrValue;
     }
   };
 
-  const shareQRCode = async () => {
-    const canvas = qrRef.current?.querySelector("canvas");
-    if (canvas) {
-      try {
-        canvas.toBlob(async (blob) => {
-          if (blob) {
-            const file = new File([blob], "qreasy-code.png", { type: "image/png" });
-            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-              await navigator.share({
-                files: [file],
-                title: "My QR Code from QReasy",
-                text: "Check out this QR Code I made!",
-              });
+  // Function to toggle FAQ items
+  const toggleFaq = (index: number) => {
+    setActiveFaq(activeFaq === index ? null : index);
+  };
+
+  // Function to render markdown content
+  const renderMarkdown = (markdown: string): ReactNode[] => {
+    const lines = markdown.split('\n');
+    const result: ReactNode[] = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      
+      if (line.startsWith('###')) {
+        result.push(<h3 key={i}>{line.replace('###', '').trim()}</h3>);
+      } else if (line.startsWith('1.') || line.startsWith('2.') || line.startsWith('3.') || line.startsWith('4.') || line.startsWith('5.')) {
+        // Start of a numbered list
+        const listItems: ReactNode[] = [];
+        let j = i;
+        
+        while (j < lines.length && (lines[j].match(/^\d+\./) || lines[j].startsWith('    '))) {
+          if (lines[j].match(/^\d+\./)) {
+            // Main list item
+            const content = lines[j].replace(/^\d+\./, '').trim();
+            
+            // Check if this item has sub-items
+            if (j + 1 < lines.length && lines[j + 1].startsWith('    ')) {
+              const subItems: ReactNode[] = [];
+              j++;
+              
+              while (j < lines.length && lines[j].startsWith('    ')) {
+                if (lines[j].match(/\s+\d+\./)) {
+                  // Numbered sub-item
+                  const subContent = lines[j].replace(/\s+\d+\./, '').trim();
+                  subItems.push(<li key={`${i}-${j}`}>{subContent}</li>);
+                }
+                j++;
+              }
+              
+              listItems.push(
+                <li key={i}>
+                  {content}
+                  <ol>{subItems}</ol>
+                </li>
+              );
+              j--; // Adjust for the outer loop increment
             } else {
-              alert("Web Share API is not supported in your browser, or cannot share files. Please download the QR code to share it.");
-              // Fallback: Trigger download if sharing is not possible but was attempted
-              downloadQRCode(); 
+              // Simple list item without sub-items
+              listItems.push(<li key={`${i}-${j}`}>{content}</li>);
             }
           }
-        }, "image/png");
-      } catch (error) {
-        console.error("Error sharing QR Code:", error);
-        alert("Could not share QR Code. Please try downloading instead.");
-      }
-    }
-  };
-  
-  const downloadQRCode = () => {
-    const canvas = qrRef.current?.querySelector('canvas');
-    if (canvas) {
-      const pngUrl = canvas
-        .toDataURL('image/png')
-        .replace('image/png', 'image/octet-stream');
-      let downloadLink = document.createElement('a');
-      downloadLink.href = pngUrl;
-      downloadLink.download = 'qreasy-code.png';
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-    }
-  };
-
-  const currentQrValue = generateQrValue();
-
-  const renderMarkdown = (markdown: string, isNumberedList = false) => {
-    let html = '';
-    const lines = markdown.split('\n');
-
-    let inOl = false;
-    let inNestedOl = false;
-
-    for (let i = 0; i < lines.length; i++) {
-      let line = lines[i];
-
-      // Pre-process for bold and br tags universally
-      line = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-      line = line.replace(/<br \/>/g, '<br />');
-
-      if (line.match(/^### (.*)/)) {
-        if (inNestedOl) { html += '</ol></li>'; inNestedOl = false; }
-        if (inOl) { html += '</li></ol>'; inOl = false; }
-        html += line.replace(/^### (.*)/, '<h3>$1</h3>');
-      } else if (isNumberedList && line.match(/^\d+\.\s+.*/)) { // Main list item
-        if (inNestedOl) { html += '</ol></li>'; inNestedOl = false; } // Close nested list if open
-        if (!inOl) { html += '<ol>'; inOl = true; }
-        else { html += '</li>'; } // Close previous main li
-        html += `<li>${line.replace(/^\d+\.\s+/, '')}`;
-      } else if (isNumberedList && line.match(/^\s{4}\d+\.\s+.*/)) { // Nested list item
-        if (!inNestedOl) {
-          html += '<ol style="margin-left: 20px; margin-top: 5px;">';
-          inNestedOl = true;
-        } else {
-          html += '</li>'; // Close previous nested li
+          j++;
         }
-        html += `<li>${line.replace(/^\s{4}\d+\.\s+/, '')}`;
-      } else { // Plain text or non-list items
-        if (line.trim() !== '') { // Only close lists if the line has content and is not part of list continuation
-          if (inNestedOl) { html += '</ol></li>'; inNestedOl = false; }
-          if (inOl) { html += '</li></ol>'; inOl = false; }
-        }
-        html += line;
-      }
-      if (i < lines.length - 1 || (i === lines.length -1 && line.trim() !== '')) { // Add newline if not the truly last empty line
-          html += '\n';
+        
+        result.push(<ol key={`list-${i}`}>{listItems}</ol>);
+        i = j - 1; // Adjust the outer loop counter
+      } else if (line.trim() !== '') {
+        result.push(<p key={i}>{line}</p>);
       }
     }
-
-    // Close any open lists at the end
-    if (inNestedOl) { html += '</ol></li>'; }
-    if (inOl) { html += '</li></ol>'; }
-
-    return { __html: html.trim() }; // Trim to remove any leading/trailing whitespace including newlines from the final HTML string
-  };
     
-  const getLogoDimensions = () => {
-    if (!qrLogo || !logoNaturalWidth || !logoNaturalHeight) {
-      return { width: 0, height: 0 };
-    }
-    const qrCanvasSize = 256;
-    const maxLogoDimension = qrCanvasSize * logoSize;
-    let width, height;
-
-    if (logoNaturalWidth > logoNaturalHeight) {
-      width = maxLogoDimension;
-      height = (logoNaturalHeight / logoNaturalWidth) * maxLogoDimension;
-    } else {
-      height = maxLogoDimension;
-      width = (logoNaturalWidth / logoNaturalHeight) * maxLogoDimension;
-    }
-    return { width, height };
-  };
-
-  const logoDimensions = getLogoDimensions();
-
-  const ColorPaletteChooser = ({ setColor }: { setColor: (color: string) => void }) => (
-    <div className="palette-chooser">
-      <label>Choose from Palette:</label>
-      <select onChange={(e) => setSelectedPalette(e.target.value as keyof typeof colorPalettes)} value={selectedPalette} className="palette-select">
-        {Object.keys(colorPalettes).map(name => (
-          <option key={name} value={name}>{name.charAt(0).toUpperCase() + name.slice(1)}</option>
-        ))}
-      </select>
-      <div className="color-swatches">
-        {colorPalettes[selectedPalette].map(color => (
-          <div 
-            key={color} 
-            className="color-swatch"
-            style={{ backgroundColor: color }}
-            onClick={() => setColor(color)}
-            title={color}
-          />
-        ))}
-      </div>
-    </div>
-  );
-
-  const toggleFaq = (index: number) => {
-    setExpandedFaqIndex(expandedFaqIndex === index ? null : index);
+    return result;
   };
 
   return (
@@ -339,7 +275,11 @@ function App() {
 
                 {qrType === 'url' && (
                   <div className="control-group">
-                    <label htmlFor="qrValue">Website URL:</label>
+                    <label htmlFor="qrValue">
+                      <div className="qr-type-option">
+                        <img src="/icons/url_icon.png" alt="URL" className="qr-type-icon" /> Website URL:
+                      </div>
+                    </label>
                     <input 
                       type="text" 
                       id="qrValue" 
@@ -352,7 +292,11 @@ function App() {
 
                 {qrType === 'text' && (
                   <div className="control-group">
-                    <label htmlFor="textValue">Text:</label>
+                    <label htmlFor="textValue">
+                      <div className="qr-type-option">
+                        <img src="/icons/text_icon.png" alt="Text" className="qr-type-icon" /> Text:
+                      </div>
+                    </label>
                     <textarea 
                       id="textValue" 
                       value={textValue} 
@@ -365,7 +309,11 @@ function App() {
                 {qrType === 'wifi' && (
                   <>
                     <div className="control-group">
-                      <label htmlFor="wifiSsid">Network Name (SSID):</label>
+                      <label htmlFor="wifiSsid">
+                        <div className="qr-type-option">
+                          <img src="/icons/wifi_icon.png" alt="Wi-Fi" className="qr-type-icon" /> Network Name (SSID):
+                        </div>
+                      </label>
                       <input type="text" id="wifiSsid" value={wifiSsid} onChange={(e) => setWifiSsid(e.target.value)} />
                     </div>
                     <div className="control-group">
@@ -386,7 +334,11 @@ function App() {
                 {qrType === 'event' && (
                   <>
                     <div className="control-group">
-                      <label htmlFor="eventName">Event Name:</label>
+                      <label htmlFor="eventName">
+                        <div className="qr-type-option">
+                          <img src="/icons/event_icon.png" alt="Event" className="qr-type-icon" /> Event Name:
+                        </div>
+                      </label>
                       <input type="text" id="eventName" value={eventName} onChange={(e) => setEventName(e.target.value)} />
                     </div>
                     <div className="control-group">
@@ -401,45 +353,84 @@ function App() {
                       <label htmlFor="eventLocation">Location:</label>
                       <input type="text" id="eventLocation" value={eventLocation} onChange={(e) => setEventLocation(e.target.value)} />
                     </div>
-                    <div className="control-group">
-                      <label htmlFor="eventDescription">Description:</label>
-                      <textarea id="eventDescription" value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} />
-                    </div>
                   </>
                 )}
 
                 {qrType === 'menu' && (
                   <div className="control-group">
-                    <label htmlFor="menuUrl">Menu URL:</label>
-                    <input type="text" id="menuUrl" value={menuUrl} onChange={(e) => setMenuUrl(e.target.value)} placeholder="e.g., https://www.restaurant.com/menu" />
+                    <label htmlFor="menuUrl">
+                      <div className="qr-type-option">
+                        <img src="/icons/menu_icon.png" alt="Menu" className="qr-type-icon" /> Menu URL:
+                      </div>
+                    </label>
+                    <input type="text" id="menuUrl" value={menuUrl} onChange={(e) => setMenuUrl(e.target.value)} placeholder="e.g., https://example.com/menu" />
                   </div>
                 )}
 
                 <div className="control-group">
-                  <label htmlFor="qrColor">QR Code Color (Custom):</label>
-                  <input type="color" id="qrColor" value={qrColor} onChange={(e) => setQrColor(e.target.value)} />
-                  <ColorPaletteChooser setColor={setQrColor} />
+                  <label htmlFor="qrColor">QR Code Color:</label>
+                  <div className="palette-chooser">
+                    <select 
+                      className="palette-select"
+                      value={selectedPalette}
+                      onChange={(e) => setSelectedPalette(e.target.value)}
+                    >
+                      <option value="default">Default</option>
+                      <option value="vintage">Vintage</option>
+                      <option value="ocean">Ocean</option>
+                      <option value="sunset">Sunset</option>
+                      <option value="grayscale">Grayscale</option>
+                    </select>
+                    <div className="color-swatches">
+                      {colorPalettes[selectedPalette].map((color, index) => (
+                        <div 
+                          key={index}
+                          className="color-swatch"
+                          style={{ backgroundColor: color }}
+                          onClick={() => setQrColor(color)}
+                          title={color}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <input 
+                    type="color" 
+                    id="qrColor" 
+                    value={qrColor} 
+                    onChange={(e) => setQrColor(e.target.value)} 
+                  />
                 </div>
+
                 <div className="control-group">
-                  <label htmlFor="qrBgColor">Background Color (Custom):</label>
-                  <input type="color" id="qrBgColor" value={qrBgColor} onChange={(e) => setQrBgColor(e.target.value)} />
-                  <ColorPaletteChooser setColor={setQrBgColor} />
+                  <label htmlFor="qrBgColor">Background Color:</label>
+                  <input 
+                    type="color" 
+                    id="qrBgColor" 
+                    value={qrBgColor} 
+                    onChange={(e) => setQrBgColor(e.target.value)} 
+                  />
                 </div>
+
                 <div className="control-group">
-                  <label htmlFor="qrLogo">Upload Logo (optional):</label>
-                  <input type="file" id="qrLogo" accept="image/*" onChange={handleLogoUpload} />
+                  <label htmlFor="logoUpload">Add Logo (Optional):</label>
+                  <input 
+                    type="file" 
+                    id="logoUpload" 
+                    accept="image/*" 
+                    onChange={handleLogoUpload} 
+                  />
                 </div>
-                {qrLogo && (
+
+                {logoFile && (
                   <div className="control-group">
-                    <label htmlFor="logoSize">Logo Size (Max 10% to 30% of QR Area):</label>
+                    <label htmlFor="logoSize">Logo Size: {logoSize}%</label>
                     <input 
                       type="range" 
                       id="logoSize" 
-                      min="0.1" 
-                      max="0.3" 
-                      step="0.01" 
+                      min="5" 
+                      max="30" 
                       value={logoSize} 
-                      onChange={(e) => setLogoSize(parseFloat(e.target.value))} 
+                      onChange={(e) => setLogoSize(parseInt(e.target.value))} 
                     />
                   </div>
                 )}
@@ -447,32 +438,28 @@ function App() {
 
               {/* Preview */}
               <div className="preview">
-                <h3>QR Code Preview</h3>
+                <h3>Preview</h3>
                 <div className="qr-preview-container" ref={qrRef}>
-                  <QRCodeCanvas
-                    value={currentQrValue}
-                    size={256}
+                  <QRCodeCanvas 
+                    value={generateQrValue()}
+                    size={qrSize}
                     bgColor={qrBgColor}
                     fgColor={qrColor}
                     level="H"
-                    includeMargin={true}
                     imageSettings={
-                      qrLogo
+                      logoFile 
                         ? {
-                            src: qrLogo,
-                            x: undefined,
-                            y: undefined,
-                            height: logoDimensions.height,
-                            width: logoDimensions.width,
+                            src: logoFile,
                             excavate: true,
-                          }
+                            width: qrSize * (logoSize / 100),
+                            height: qrSize * (logoSize / 100),
+                          } 
                         : undefined
                     }
                   />
-                  <div className="action-buttons">
-                    <button onClick={downloadQRCode} className="download-btn">Download QR Code</button>
-                    <button onClick={shareQRCode} className="share-btn">Share QR Code</button>
-                  </div>
+                </div>
+                <div className="action-buttons">
+                  <button className="download-btn" onClick={handleDownload}>Download QR Code</button>
                 </div>
               </div>
             </div>
@@ -484,22 +471,28 @@ function App() {
       <section className="section-container">
         <div className="section-inner">
           <div className="section-header">
-            <h2>How to Use QReasy</h2>
-            <p>Follow these simple steps to create and use your custom QR code.</p>
+            <h2>How to Use</h2>
+            <p>Follow these simple steps to create and use your QR code.</p>
           </div>
-          <div className="guide-section" dangerouslySetInnerHTML={renderMarkdown(howToUseContent, true)} />
-          
-          {/* QR Code Type Examples */}
-          <div className="guide-section" style={{ marginTop: '30px' }}>
-            <h3>When to Use Each QR Code Type</h3>
-            <div style={{ marginTop: '20px' }}>
-              {qrTypeExamples.map((item, index) => (
-                <div key={index} style={{ marginBottom: '20px' }}>
-                  <h4 style={{ color: 'var(--primary-color)', marginBottom: '8px' }}>{item.type}</h4>
-                  <p>{item.example}</p>
-                </div>
-              ))}
-            </div>
+          <div className="guide-section">
+            {renderMarkdown(howToUseContent)}
+            
+            <h3>QR Code Types Explained:</h3>
+            {qrTypeExamples.map((item, index) => (
+              <div key={index} className="qr-type-example">
+                <h4>
+                  <div className="qr-type-option">
+                    <img 
+                      src={`/icons/${item.type.toLowerCase()}_icon.png`} 
+                      alt={item.type} 
+                      className="qr-type-icon" 
+                    /> 
+                    {item.type}
+                  </div>
+                </h4>
+                <p>{item.example}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -509,7 +502,7 @@ function App() {
         <div className="section-inner">
           <div className="section-header">
             <h2>QR Codes in Action</h2>
-            <p>Discover creative ways to use QR codes in your business or personal projects.</p>
+            <p>Discover how QR codes can enhance your business or personal projects.</p>
           </div>
           <div className="examples-grid">
             {exampleCases.map((example, index) => (
@@ -529,27 +522,23 @@ function App() {
       <section className="section-container">
         <div className="section-inner">
           <div className="section-header">
-            <h2>Your Questions, Answered</h2>
-            <p>Find answers to commonly asked questions about QR codes and our generator.</p>
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions about QR codes and our generator.</p>
           </div>
           <div className="faq-section-container">
-            {faqItems.map((item, index) => (
-              <div key={index}>
+            {faqItems.map((faq, index) => (
+              <div className="faq-item" key={index}>
                 <div 
                   className="faq-header" 
                   onClick={() => toggleFaq(index)}
                 >
-                  <h3>{item.question}</h3>
-                  <div className={`faq-toggle-icon ${expandedFaqIndex === index ? 'open' : ''}`}>
+                  <h3>{faq.question}</h3>
+                  <div className={`faq-toggle-icon ${activeFaq === index ? 'open' : ''}`}>
                     ▼
                   </div>
                 </div>
-                <div className={`faq-content ${expandedFaqIndex === index ? 'open' : ''}`}>
-                  <div className="faq-items">
-                    <div className="faq-item">
-                      <p>{item.answer}</p>
-                    </div>
-                  </div>
+                <div className={`faq-content ${activeFaq === index ? 'open' : ''}`}>
+                  <p>{faq.answer}</p>
                 </div>
               </div>
             ))}
@@ -557,10 +546,9 @@ function App() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="footer">
         <p>© {new Date().getFullYear()} QReasy - Free QR Code Generator. All rights reserved.</p>
-        <p>Created with ❤️ for all your QR code needs.</p>
+        <p>Created with ❤️ by QReasy Team</p>
       </footer>
     </div>
   );

@@ -206,6 +206,19 @@ body {
   resize: vertical;
 }
 
+/* QR Type Icon Styles */
+.qr-type-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qr-type-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
 /* Preview Styles */
 .preview {
   flex: 1;
