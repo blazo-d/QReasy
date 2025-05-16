@@ -89,7 +89,6 @@ function App() {
   const [textValue, setTextValue] = useState('');
 
   const qrRef = useRef<HTMLDivElement>(null);
-  const [showFaq, setShowFaq] = useState(false);
   const [selectedPalette, setSelectedPalette] = useState<keyof typeof colorPalettes>('default');
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
