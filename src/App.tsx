@@ -19,33 +19,6 @@ const howToUseContent = `
 That's it! Simple, fast, and free.
 `;
 
-A5: QR codes are downloaded as high-quality PNG image files, which are suitable for both digital use and printing.
-
-**Q6: Are the QR codes I create tracked? What about privacy?**
-
-A6: We prioritize your privacy. The static QR codes generated on QReasy are not tracked. Once you download your QR code, it works independently and does not send any data back to us.
-
-**Q7: Will my QR codes expire?**
-
-A7: No, the static QR codes you create with QReasy do not expire. As long as the data encoded (like a website URL) remains valid, your QR code will continue to work indefinitely.
-
-**Q8: What is the optimal size for a logo in the QR code?**
-
-A8: While you can adjust the logo size, it's best to keep it relatively small (the tool allows up to 30% of the QR code area) to ensure the QR code remains easily scannable. A clear, simple logo works best. Non-square logos will maintain their original aspect ratio.
-
-**Q9: My QR code isn't scanning. What could be wrong?**
-
-A9: 
-* Ensure the contrast between your QR code color and background color is high enough.
-* If you added a logo, try making it smaller or removing it to see if that helps.
-* Make sure the data you entered (e.g., URL) is correct and not too long for a QR code to handle reliably without becoming too dense.
-* Test with different QR code scanning apps and devices.
-
-**Q10: How does this website make money if it's free?**
-
-A10: QReasy is supported by the advertisements displayed on the website. This allows us to offer the QR code generation service for free to all users.
-`;
-
 const colorPalettes = {
   default: ['#000000', '#FFFFFF', '#4A90E2', '#F5A623', '#D0021B', '#7ED321'],
   vintage: ['#5D4037', '#D7CCC8', '#8D6E63', '#A1887F', '#EFEBE9'],
