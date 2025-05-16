@@ -453,9 +453,7 @@ function App() {
 
         </main>
       </div>
-      {showFaq && (
-        <section className="info-section faq-section-floating" dangerouslySetInnerHTML={renderMarkdown(faqContent, false)} />
-      )}
+      {/* FAQ section is now permanently displayed in the sidebar */}
       <footer className="App-footer">
         <p>&copy; {new Date().getFullYear()} QReasy. All rights reserved.</p>
         <div className="ad-placeholder ad-placeholder-footer">
