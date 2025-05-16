@@ -463,13 +463,67 @@ function App() {
       {/* Full-width FAQ Section */}
       <div className="faq-section-container">
         <div className="faq-header" onClick={() => setFaqExpanded(!faqExpanded)}>
-          <h3>Frequently Asked Questions (FAQ)</h3>
+          <h3>Your questions, answered</h3>
           <div className={`faq-toggle-icon ${faqExpanded ? 'open' : ''}`}>
             {faqExpanded ? '▲' : '▼'}
           </div>
         </div>
         <div className={`faq-content ${faqExpanded ? 'open' : ''}`}>
-          <div dangerouslySetInnerHTML={renderMarkdown(faqContent)} />
+          <div className="faq-items">
+            <div className="faq-item">
+              <h4>What is a QR code and how do they work?</h4>
+              <p>A QR (Quick Response) code is a type of 2D barcode that stores information in a square pattern of black modules on a white background. Unlike traditional barcodes, QR codes can be scanned from any orientation and can store much more information. They work by translating the arrangement of these squares into data that can be easily read by smartphone cameras and QR scanners.</p>
+            </div>
+            
+            <div className="faq-item">
+              <h4>What are the benefits of using a QR code?</h4>
+              <p>QR codes offer numerous benefits including:</p>
+              <ul>
+                <li>Quick and easy access to digital content from physical materials</li>
+                <li>Contactless information sharing (especially important in health-conscious environments)</li>
+                <li>Ability to store more information than traditional barcodes</li>
+                <li>Versatility for marketing, payments, authentication, and more</li>
+                <li>Cost-effective way to connect offline audiences to online experiences</li>
+              </ul>
+            </div>
+            
+            <div className="faq-item">
+              <h4>Is QReasy's QR code generator really free?</h4>
+              <p>Yes! QReasy is 100% free to use with no hidden fees. You can create unlimited QR codes with full customization options including colors and logo embedding. The service is supported by non-intrusive advertisements that appear on the website.</p>
+            </div>
+            
+            <div className="faq-item">
+              <h4>Will my QR code expire?</h4>
+              <p>No, the QR codes you create with QReasy are static codes that never expire. They will continue to work indefinitely as long as the content they link to (such as your website) remains active. Unlike dynamic QR codes that require subscription services, our static QR codes are permanent and maintenance-free.</p>
+            </div>
+            
+            <div className="faq-item">
+              <h4>How do I scan a QR code?</h4>
+              <p>Most modern smartphones can scan QR codes directly through their camera apps. Simply open your camera, point it at the QR code, and hold steady for a moment. A notification should appear that you can tap to access the content. If this doesn't work, you may need to download a dedicated QR code scanner app from your app store.</p>
+            </div>
+            
+            <div className="faq-item">
+              <h4>Can I customize my QR code's appearance?</h4>
+              <p>Absolutely! QReasy allows you to fully customize your QR codes. You can change the foreground and background colors, choose from color palettes, and even embed your logo in the center of the QR code. This helps you create QR codes that match your brand identity while remaining functional.</p>
+            </div>
+            
+            <div className="faq-item">
+              <h4>What types of content can I create QR codes for?</h4>
+              <p>QReasy supports multiple QR code types including:</p>
+              <ul>
+                <li>Website URLs</li>
+                <li>Plain text</li>
+                <li>Wi-Fi network credentials</li>
+                <li>Event details</li>
+                <li>Restaurant menus</li>
+              </ul>
+            </div>
+            
+            <div className="faq-item">
+              <h4>Are my QR codes tracked or monitored?</h4>
+              <p>No. QReasy generates static QR codes that work independently once downloaded. We don't track, store, or monitor the QR codes you create or their usage. Your data and privacy are respected at all times.</p>
+            </div>
+          </div>
         </div>
       </div>
       
