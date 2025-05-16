@@ -124,37 +124,33 @@ function App() {
       case 'url':
       default:
         return qrValue;
-    }
-  };
-
-  const shareQRCode = async () => {
-    const canvas = qrRef.current?.querySelector(\'canvas\');
+    }  const shareQRCode = async () => {
+    const canvas = qrRef.current?.querySelector("canvas");
     if (canvas) {
       try {
         canvas.toBlob(async (blob) => {
           if (blob) {
-            const file = new File([blob], \'qreasy-code.png\', { type: \'image/png\' });
+            const file = new File([blob], "qreasy-code.png", { type: "image/png" });
             if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
               await navigator.share({
                 files: [file],
-                title: \'My QR Code from QReasy\',
-                text: \'Check out this QR Code I made!\',
+                title: "My QR Code from QReasy",
+                text: "Check out this QR Code I made!",
               });
             } else {
-              alert(\'Web Share API is not supported in your browser, or cannot share files. Please download the QR code to share it.\');
+              alert("Web Share API is not supported in your browser, or cannot share files. Please download the QR code to share it.");
               // Fallback: Trigger download if sharing is not possible but was attempted
               downloadQRCode(); 
             }
           }
-        }, \'image/png\');
+        }, "image/png");
       } catch (error) {
-        console.error(\'Error sharing QR Code:\', error);
-        alert(\'Could not share QR Code. Please try downloading instead.\');
+        console.error("Error sharing QR Code:", error);
+        alert("Could not share QR Code. Please try downloading instead.");
       }
     }
   };
-
-  const downloadQRCode = () => {
+wnloadQRCode = () => {
     const canvas = qrRef.current?.querySelector('canvas');
     if (canvas) {
       const pngUrl = canvas
