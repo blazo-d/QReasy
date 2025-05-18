@@ -1,7 +1,7 @@
 /* Global Styles */
 :root {
-  --primary-color: #046dc8;
-  --primary-light: #e3f2fd;
+  --primary-color: #fecf3e;
+  --primary-light: #fff8e1;
   --secondary-color: #ff5722;
   --text-dark: #333333;
   --text-light: #ffffff;
@@ -74,7 +74,7 @@ body {
 .section-header h2 {
   font-size: 2rem;
   margin-bottom: 15px;
-  color: var(--text-dark);
+  color: var(--primary-color);
 }
 
 .section-header p {
@@ -268,7 +268,7 @@ body {
 
 .download-btn {
   background-color: var(--primary-color);
-  color: var(--text-light);
+  color: var(--text-dark);
 }
 
 .share-btn {
@@ -295,6 +295,7 @@ body {
   font-size: 1.6rem;
   margin-bottom: 20px;
   color: var(--primary-color);
+  font-weight: bold;
 }
 
 .guide-section ol {
@@ -307,6 +308,7 @@ body {
 
 .guide-section strong {
   color: var(--primary-color);
+  font-weight: bold;
 }
 
 /* Examples Section */
@@ -419,7 +421,7 @@ body {
 
 .faq-header h3 {
   margin: 0;
-  color: var(--text-light);
+  color: var(--text-dark);
   font-size: 1.1em;
   font-weight: 600;
 }
@@ -431,7 +433,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-light);
+  color: var(--text-dark);
 }
 
 .faq-toggle-icon.open {
