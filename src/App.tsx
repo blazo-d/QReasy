@@ -149,13 +149,27 @@ function App() {
     setActiveFaq(activeFaq === index ? null : index);
   };
 
+  // Helper function to process double asterisks for bold and color
+  const processDoubleAsterisks = (text: string): ReactNode => {
+    if (!text.includes('**')) return text;
+    
+    const parts = text.split(/(\*\*.*?\*\*)/g);
+    return parts.map((part, index) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        const content = part.slice(2, -2);
+        return <span key={index} style={{ fontWeight: 'bold', color: '#fecf3e' }}>{content}</span>;
+      }
+      return part;
+    });
+  };
+
   // Function to render markdown content
   const renderMarkdown = (markdown: string): ReactNode[] => {
     const lines = markdown.split('\n');
     const result: ReactNode[] = [];
     
     for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
+      let line = lines[i];
       
       if (line.startsWith('###')) {
         result.push(<h3 key={i} style={{color: '#046dc8', fontWeight: 'bold'}}>{line.replace('###', '').trim()}</h3>);
@@ -178,21 +192,23 @@ function App() {
                 if (lines[j].match(/\s+\d+\./)) {
                   // Numbered sub-item
                   const subContent = lines[j].replace(/\s+\d+\./, '').trim();
-                  subItems.push(<li key={`${i}-${j}`}>{subContent}</li>);
+                  
+                  // Process double asterisks for bold and color in sub-items
+                  subItems.push(<li key={`${i}-${j}`}>{processDoubleAsterisks(subContent)}</li>);
                 }
                 j++;
               }
               
               listItems.push(
                 <li key={i}>
-                  {content}
+                  {processDoubleAsterisks(content)}
                   <ol>{subItems}</ol>
                 </li>
               );
               j--; // Adjust for the outer loop increment
             } else {
               // Simple list item without sub-items
-              listItems.push(<li key={`${i}-${j}`}>{content}</li>);
+              listItems.push(<li key={`${i}-${j}`}>{processDoubleAsterisks(content)}</li>);
             }
           }
           j++;
@@ -201,7 +217,8 @@ function App() {
         result.push(<ol key={`list-${i}`}>{listItems}</ol>);
         i = j - 1; // Adjust the outer loop counter
       } else if (line.trim() !== '') {
-        result.push(<p key={i}>{line}</p>);
+        // Process double asterisks for regular paragraphs
+        result.push(<p key={i}>{processDoubleAsterisks(line)}</p>);
       }
     }
     
