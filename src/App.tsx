@@ -228,8 +228,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Freebee QR: Free QR Code Generator</h1>
-        <p>Create custom QR codes for free. User-friendly and privacy-focused.</p>
+        <div className="header-content">
+          <h1>Freebee QR: Free QR Code Generator</h1>
+          <p>Create custom QR codes for free. User-friendly and privacy-focused.</p>
+        </div>
+        {/* Ad space in header */}
+        <div className="ad-space ad-space-header">
+          <p>Advertisement Space<br />300 x 90</p>
+        </div>
       </header>
 
       {/* Intro Section */}
@@ -429,30 +435,37 @@ function App() {
                 )}
               </div>
 
-              {/* Preview */}
-              <div className="preview">
-                <h3>Preview</h3>
-                <div className="qr-preview-container" ref={qrRef}>
-                  <QRCodeCanvas 
-                    value={generateQrValue()}
-                    size={qrSize}
-                    bgColor={qrBgColor}
-                    fgColor={qrColor}
-                    level="H"
-                    imageSettings={
-                      logoFile 
-                        ? {
-                            src: logoFile,
-                            excavate: true,
-                            width: qrSize * (logoSize / 100),
-                            height: qrSize * (logoSize / 100),
-                          } 
-                        : undefined
-                    }
-                  />
+              {/* Preview with Ad Space */}
+              <div className="preview-container">
+                <div className="preview">
+                  <h3>Preview</h3>
+                  <div className="qr-preview-container" ref={qrRef}>
+                    <QRCodeCanvas 
+                      value={generateQrValue()}
+                      size={qrSize}
+                      bgColor={qrBgColor}
+                      fgColor={qrColor}
+                      level="H"
+                      imageSettings={
+                        logoFile 
+                          ? {
+                              src: logoFile,
+                              excavate: true,
+                              width: qrSize * (logoSize / 100),
+                              height: qrSize * (logoSize / 100),
+                            } 
+                          : undefined
+                      }
+                    />
+                  </div>
+                  <div className="action-buttons">
+                    <button className="download-btn" onClick={handleDownload}>Download QR Code</button>
+                  </div>
                 </div>
-                <div className="action-buttons">
-                  <button className="download-btn" onClick={handleDownload}>Download QR Code</button>
+                
+                {/* Ad space next to QR preview */}
+                <div className="ad-space ad-space-sidebar">
+                  <p>Advertisement Space<br />300 x 250</p>
                 </div>
               </div>
             </div>
