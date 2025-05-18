@@ -19,30 +19,6 @@ const howToUseContent = `
 That's it! Simple, fast, and free.
 `;
 
-// QR Code Type Examples
-const qrTypeExamples = [
-  {
-    type: "URL",
-    example: "Perfect for: Linking to your website or social media profile on business cards, flyers, or posters. For example, a restaurant owner could create a QR code that links to their online menu or reservation page."
-  },
-  {
-    type: "Text",
-    example: "Perfect for: Sharing a short message, quote, or instructions. For example, a museum could create QR codes next to exhibits that reveal interesting facts when scanned."
-  },
-  {
-    type: "Wi-Fi",
-    example: "Perfect for: Giving guests easy access to your Wi-Fi network without typing passwords. For example, a coffee shop owner could display a QR code that automatically connects customers to their Wi-Fi when scanned."
-  },
-  {
-    type: "Event",
-    example: "Perfect for: Sharing event details that can be added to calendars. For example, a wedding invitation could include a QR code that adds the ceremony and reception details to guests' calendars."
-  },
-  {
-    type: "Menu",
-    example: "Perfect for: Restaurants wanting to provide a digital menu. For example, a restaurant could place QR codes on tables that link to their up-to-date online menu, reducing the need for printed menus."
-  }
-];
-
 // FAQ Content
 const faqItems = [
   {
@@ -476,23 +452,6 @@ function App() {
           </div>
           <div className="guide-section">
             {renderMarkdown(howToUseContent)}
-            
-            <h3 style={{color: '#046dc8', fontWeight: 'bold'}}>QR Code Types Explained:</h3>
-            {qrTypeExamples.map((item, index) => (
-              <div key={index} className="qr-type-example">
-                <h4>
-                  <div className="qr-type-option">
-                    <img 
-                      src={`/icons/${item.type.toLowerCase()}_icon.png`} 
-                      alt={item.type} 
-                      className="qr-type-icon" 
-                    /> 
-                    {item.type}
-                  </div>
-                </h4>
-                <p>{item.example}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
