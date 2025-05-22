@@ -238,45 +238,84 @@ function App() {
         </div>
       </header>
 
-      {/* Intro Section */}
+      {/* Hero Section - Enhanced with clearer value proposition */}
       <section className="intro-section-container">
         <div className="intro-text">
-          <h2>Our Free and Easy QR Code Generator</h2>
-          <p>Reach new clients with a free QR code. Ideal for marketing and sales teams. You can use it for accessing your contact details, your website, your event, your menu, your wi-fi code.</p>
+          <h2>Create QR Codes in Seconds - <span className="highlight">100% Free</span></h2>
+          <p className="hero-tagline">Connect your audience to your digital content instantly</p>
+          <ul className="benefit-list">
+            <li><span className="benefit-icon">✓</span> No sign-up required</li>
+            <li><span className="benefit-icon">✓</span> Unlimited QR codes</li>
+            <li><span className="benefit-icon">✓</span> Commercial use allowed</li>
+            <li><span className="benefit-icon">✓</span> Customizable designs</li>
+          </ul>
+          <a href="#create-section" className="cta-button">Create Your QR Code Now</a>
         </div>
         <div className="intro-image">
           <img src="/images/mobile_qr_intro.jpeg" alt="Mobile phone creating a QR code" />
+          <div className="pulse-animation"></div>
         </div>
       </section>
 
-      {/* Customize Section */}
-      <section className="section-container">
+      {/* Customize Section - With progressive disclosure and clearer benefits */}
+      <section className="section-container" id="create-section">
         <div className="section-inner">
           <div className="section-header">
-            <h2>Create Your QR Code</h2>
-            <p>Customize your QR code to match your brand and needs. Choose from different types, colors, and add your logo.</p>
+            <h2>Create Your QR Code in 3 Simple Steps</h2>
+            <p>No technical knowledge required - just select, customize, and download</p>
           </div>
           
           <div className="customize-section">
+            <div className="step-indicators">
+              <div className={`step-indicator ${qrType ? 'active' : ''}`}>
+                <span className="step-number">1</span>
+                <span className="step-label">Choose Type</span>
+              </div>
+              <div className="step-connector"></div>
+              <div className={`step-indicator ${qrValue || textValue || wifiSsid || eventName || menuUrl ? 'active' : ''}`}>
+                <span className="step-number">2</span>
+                <span className="step-label">Enter Data</span>
+              </div>
+              <div className="step-connector"></div>
+              <div className="step-indicator">
+                <span className="step-number">3</span>
+                <span className="step-label">Download</span>
+              </div>
+            </div>
+            
             <div className="controls-preview-container">
               {/* Controls */}
               <div className="controls">
                 <div className="control-group">
-                  <label htmlFor="qrType">QR Code Type:</label>
+                  <label htmlFor="qrType">
+                    <div className="label-with-tooltip">
+                      QR Code Type:
+                      <div className="tooltip-container">
+                        <span className="tooltip-icon">?</span>
+                        <span className="tooltip-text">Select the type of content you want to share with your QR code</span>
+                      </div>
+                    </div>
+                  </label>
                   <select id="qrType" value={qrType} onChange={(e) => setQrType(e.target.value)}>
-                    <option value="url">URL</option>
-                    <option value="text">Text</option>
-                    <option value="wifi">Wi-Fi</option>
-                    <option value="event">Event (Basic)</option>
-                    <option value="menu">Menu (URL)</option>
+                    <option value="url">URL - Link to a website</option>
+                    <option value="text">Text - Share a message</option>
+                    <option value="wifi">Wi-Fi - Connect to network</option>
+                    <option value="event">Event - Add to calendar</option>
+                    <option value="menu">Menu - Restaurant menu</option>
                   </select>
                 </div>
 
                 {qrType === 'url' && (
                   <div className="control-group">
                     <label htmlFor="qrValue">
-                      <div className="qr-type-option">
-                        <img src="/icons/url_icon.png" alt="URL" className="qr-type-icon" /> Website URL:
+                      <div className="label-with-tooltip">
+                        <div className="qr-type-option">
+                          <img src="/icons/url_icon.png" alt="URL" className="qr-type-icon" /> Website URL:
+                        </div>
+                        <div className="tooltip-container">
+                          <span className="tooltip-icon">?</span>
+                          <span className="tooltip-text">Enter the full website address including https:// (e.g., https://www.example.com)</span>
+                        </div>
                       </div>
                     </label>
                     <input 
@@ -286,6 +325,7 @@ function App() {
                       onChange={(e) => setQrValue(e.target.value)} 
                       placeholder="e.g., https://www.example.com"
                     />
+                    <div className="benefit-tag">Perfect for: Business cards, marketing materials, and social media profiles</div>
                   </div>
                 )}
 
