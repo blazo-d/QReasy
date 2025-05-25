@@ -240,20 +240,22 @@ function App() {
 
       {/* Hero Section - Enhanced with clearer value proposition */}
       <section className="intro-section-container">
-        <div className="intro-text">
-          <h2>Create QR Codes in Seconds - <span className="highlight">100% Free</span></h2>
-          <p className="hero-tagline">Connect your audience to your digital content instantly</p>
-          <ul className="benefit-list">
-            <li><span className="benefit-icon">✓</span> No sign-up required</li>
-            <li><span className="benefit-icon">✓</span> Unlimited QR codes</li>
-            <li><span className="benefit-icon">✓</span> Commercial use allowed</li>
-            <li><span className="benefit-icon">✓</span> Customizable designs</li>
-          </ul>
-          <a href="#create-section" className="cta-button">Create Your QR Code Now</a>
-        </div>
-        <div className="intro-image">
-          <img src="/images/mobile_qr_intro.jpeg" alt="Mobile phone creating a QR code" />
-          <div className="pulse-animation"></div>
+        <div className="section-inner">
+          <div className="intro-text">
+            <h2>Create QR Codes in Seconds - <span className="highlight">100% Free</span></h2>
+            <p className="hero-tagline">Connect your audience to your digital content instantly</p>
+            <ul className="benefit-list">
+              <li><span className="benefit-icon">✓</span> No sign-up required</li>
+              <li><span className="benefit-icon">✓</span> Unlimited QR codes</li>
+              <li><span className="benefit-icon">✓</span> Commercial use allowed</li>
+              <li><span className="benefit-icon">✓</span> Customizable designs</li>
+            </ul>
+            <a href="#create-section" className="cta-button">Create Your QR Code Now</a>
+          </div>
+          <div className="intro-image">
+            <img src="/images/mobile_qr_intro.jpeg" alt="Mobile phone creating a QR code" />
+            <div className="pulse-animation"></div>
+          </div>
         </div>
       </section>
 
